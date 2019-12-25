@@ -1,0 +1,5 @@
+rootProject.name = 'autoibank'
+include 'secondarymarket'
+include 'BusinessModel'
+include 'SecondaryMarketGateway'
+
