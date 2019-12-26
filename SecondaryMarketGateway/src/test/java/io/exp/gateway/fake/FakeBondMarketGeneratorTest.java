@@ -15,7 +15,7 @@ class FakeBondMarketGeneratorTest {
         double seedPrice = 100;
         String currency = "USD";
         String[] securityArray = {"ISIN1234", "ISIN4324", "CISP23434"};
-        FakeBondMarketGenerator fakeBondMarketGenerator = new FakeBondMarketGenerator(seedNotional, seedPrice, currency, 1000, 0.1, securityArray);
+        FakeBondMarketGenerator fakeBondMarketGenerator = new FakeBondMarketGenerator(seedNotional, seedPrice, currency, seedNotional*0.1, seedPrice*0.1, securityArray);
         while (cnt<MAX){
             Trade trade = fakeBondMarketGenerator.generateTrade();
             assertAll(

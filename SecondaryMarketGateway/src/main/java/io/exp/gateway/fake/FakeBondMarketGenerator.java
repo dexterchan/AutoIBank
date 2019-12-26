@@ -24,7 +24,7 @@ public class FakeBondMarketGenerator {
         tradeFactory = new BondTradeFactory();
     }
 
-    public FakeBondMarketGenerator(double seedNotional, double seedPrice, String currency, int i, double v, String[] securityArray) {
+    public FakeBondMarketGenerator(double seedNotional, double seedPrice, String currency, double i, double v, String[] securityArray) {
         this.seedNotional=seedNotional;
         this.seedPrice=seedPrice;
         this.currency=currency;
