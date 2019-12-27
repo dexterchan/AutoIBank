@@ -21,26 +21,25 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-public class MarketTradeUnboundedSource<T> extends UnboundedSource<T, UnboundedSource.CheckpointMark> implements Serializable {
+public class MarketTradeUnboundedSource<T> extends UnboundedSource<T, MarketTradeReaderCheckPoint> implements Serializable {
 
     private final MarketGatewayInterface marketGatewayInterface;
     private final Class classCoder;
 
     @Override
-    public List<? extends UnboundedSource<T, CheckpointMark>> split(int desiredNumSplits, PipelineOptions options) throws Exception {
+    public List<? extends UnboundedSource<T, MarketTradeReaderCheckPoint>> split(int desiredNumSplits, PipelineOptions options) throws Exception {
         // TODO Auto-generated method stub
         return Arrays.asList(this);
     }
 
     @Override
-    public UnboundedReader<T> createReader(PipelineOptions options, @Nullable CheckpointMark checkpointMark) throws IOException {
+    public UnboundedReader<T> createReader(PipelineOptions options, @Nullable MarketTradeReaderCheckPoint checkpointMark) throws IOException {
         return new MarketTradeUnboundedReader(this, marketGatewayInterface);
     }
 
     @Override
-    public Coder<CheckpointMark> getCheckpointMarkCoder() {
-        return AvroCoder.of(.class);
-        //return AvroCoder.of(CheckpointMark.NoopCheckpointMark.class);
+    public Coder<MarketTradeReaderCheckPoint> getCheckpointMarkCoder() {
+        return AvroCoder.of(MarketTradeReaderCheckPoint.class);
     }
 
     @Override
