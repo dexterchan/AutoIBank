@@ -34,4 +34,27 @@ public class BondAsset implements Asset{
         return g.toJson(this);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BondAsset)){
+            return false;
+        }
+        BondAsset bondAsset = (BondAsset)obj;
+        if (Math.abs(this.notional-bondAsset.notional)>0.1){
+            return false;
+        }
+        if (Math.abs(this.price - bondAsset.price)>0.001){
+            return false;
+        }
+        if (!this.currency.equals(bondAsset.currency)){
+            return false;
+        }
+        if(!this.securityId.equals(bondAsset.securityId)){
+            return false;
+        }
+        if(this.bidAsk!=bondAsset.bidAsk){
+            return false;
+        }
+        return true;
+    }
 }

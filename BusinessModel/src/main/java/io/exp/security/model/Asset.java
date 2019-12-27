@@ -1,12 +1,14 @@
 package io.exp.security.model;
 
-public interface Asset {
-    String getSecurityId();
-    String getSecurityGroup();
-    double getNotional();
-    double getPrice();
-    String getCurrency();
-    BidAsk getBidAsk();
-    String getTradeType();
+import java.io.Serializable;
+
+public  interface Asset extends Serializable {
+    public  String getSecurityId();
+    public  String getSecurityGroup();
+    public  double getNotional();
+    public  double getPrice();
+    public  String getCurrency();
+    public  BidAsk getBidAsk();
+    public  String getTradeType();
 
 }

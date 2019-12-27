@@ -1,6 +1,7 @@
 package io.exp.gateway.fake;
 
 import io.exp.gateway.MarketGatewayInterface;
+import io.exp.security.model.BondTrade;
 import io.exp.security.model.Trade;
 
 import java.util.concurrent.ExecutorService;
@@ -8,11 +9,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-public class FakeBondMarketGatewayProxy implements MarketGatewayInterface {
+public class FakeBondMarketGatewayProxy implements MarketGatewayInterface<BondTrade> {
     private boolean isAlive = true;
-    private int SLEEP_MS = 200;
+    private int SLEEP_MS = 50;
     private FakeBondMarketGenerator fakeBondMarketGenerator = null;
-    private ExecutorService executor = Executors.newFixedThreadPool(2);
+    private static ExecutorService executor = Executors.newFixedThreadPool(2);
 
     public FakeBondMarketGatewayProxy(){
          double seedNotional = 1000000;
@@ -26,12 +27,17 @@ public class FakeBondMarketGatewayProxy implements MarketGatewayInterface {
     }
 
     @Override
-    public void subscribe(Consumer<Trade> tradeConsumer, Consumer<Throwable> throwableConsumer) {
+    public boolean connect() {
+        return true;
+    }
+
+    @Override
+    public void subscribe(Consumer<BondTrade> tradeConsumer, Consumer<Throwable> throwableConsumer) {
         isAlive = true;
         executor.execute(()-> {
             while (isAlive) {
-                Trade trade = this.fakeBondMarketGenerator.generateTrade();
-                tradeConsumer.accept(trade);
+                BondTrade bondTrade = this.fakeBondMarketGenerator.generateTrade();
+                tradeConsumer.accept(bondTrade);
                 try {
                     Thread.sleep(SLEEP_MS);
                 } catch (Exception ex) {

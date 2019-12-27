@@ -12,12 +12,18 @@ repositories {
 }
 
 dependencies {
+    compile project(':BusinessModel')
+    compile project(':SecondaryMarketGateway')
     compile "org.slf4j:slf4j-api:$slf4jVersion"
     compile "org.slf4j:slf4j-log4j12:$slf4jVersion"
     compile "org.apache.logging.log4j:log4j-core:$log4jVersion"
-    compile group: 'com.google.code.gson', name: 'gson', version: "$gsonVersion"
 
     compile  "org.apache.beam:beam-sdks-java-core:$beamVersion"
+    compile  "org.apache.beam:beam-sdks-java-io-google-cloud-platform:$beamVersion"
+    compile  "org.apache.beam:beam-sdks-java-io-kafka:$beamVersion"
+
+    compile group: 'com.google.guava', name: 'guava', version: "$guavaVersion"
+
 
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
@@ -27,7 +33,10 @@ dependencies {
     testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testCompile "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
+    testCompile group: 'org.mockito', name: 'mockito-core', version: "$mockitoVersion"
+    testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: "$mockitoVersion"
     testCompile group: 'org.assertj', name: 'assertj-core', version: "$assetjVersion"
+
 }
 
 test {
@@ -55,3 +64,5 @@ task integrationTest(type: Test) {
         events "passed", "skipped", "failed"
     }
 }
+
+apply from: rootProject.file('gradle/profile.gradle')

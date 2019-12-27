@@ -1,5 +1,5 @@
 rootProject.name = 'autoibank'
-include 'secondarymarket'
+include 'SecondaryMarketAnalysis'
 include 'BusinessModel'
 include 'SecondaryMarketGateway'
 

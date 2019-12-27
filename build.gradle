@@ -11,7 +11,7 @@ repositories {
 }
 
 ext{
-    beamVersion = '2.15.0'
+    beamVersion = '2.16.0'
     slf4jVersion = '1.7.28'
     log4jVersion = '2.12.1'
     junitVersion = "5.3.1"

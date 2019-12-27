@@ -1,7 +1,8 @@
 package io.exp.gateway;
 
-import io.exp.gateway.fake.FakeMarketGatewayFactory;
+import io.exp.gateway.fake.FakeBondMarketGatewayFactory;
 import io.exp.gateway.observe.Observer;
+import io.exp.security.model.BondTrade;
 import io.exp.security.model.Trade;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,9 +29,10 @@ public class Main {
     };
     public static void main(String []args){
         log.info("Running Gateway");
-        AbstractMarketGatewayFactory marketGatewayFactory = new FakeMarketGatewayFactory();
-        MarketGatewayInterface marketGatewayInterface = marketGatewayFactory.createMarketGateway("test", "ABCD");
-        Observer<Trade> [] observers = new Observer[]{TradeObserverLogObserver};
+        AbstractMarketGatewayFactory<BondTrade> marketGatewayFactory = new FakeBondMarketGatewayFactory();
+        MarketGatewayInterface<BondTrade> marketGatewayInterface = marketGatewayFactory.createMarketGateway("test", "ABCD");
+        Observer<BondTrade> [] observers = new Observer[]{TradeObserverLogObserver};
+        marketGatewayInterface.connect();
         MarketRegistry.registerMarket(marketGatewayInterface, Arrays.asList(observers));
 
 

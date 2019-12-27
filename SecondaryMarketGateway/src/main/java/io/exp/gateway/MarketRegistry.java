@@ -6,18 +6,22 @@ import io.exp.gateway.observe.Subject;
 import io.exp.security.model.Trade;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MarketRegistry {
-
-    public static  Subject<Trade> registerMarket(MarketGatewayInterface marketGatewayInterface, List<Observer<Trade> > observerList){
-        Subject<Trade> subject = new GenericSubject();
+    private static ExecutorService executorService = Executors.newFixedThreadPool(10);
+    public static <T>  Subject<T> registerMarket(MarketGatewayInterface<T> marketGatewayInterface, List<Observer<T> > observerList){
+        Subject<T> subject = new GenericSubject();
         observerList.forEach( observer->{
             subject.registerObserver(observer);
         });
-        marketGatewayInterface.subscribe(
-                trade ->subject.notifyOservers(trade),
-                throwable -> subject.notifyObservers(throwable)
-        );
+        executorService.execute(()->{
+            marketGatewayInterface.subscribe(
+                    trade ->subject.notifyOservers(trade),
+                    throwable -> subject.notifyObservers(throwable)
+            );
+        });
         return subject;
     }
 }

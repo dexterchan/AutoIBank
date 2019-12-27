@@ -1,5 +1,5 @@
 package io.exp.gateway;
 
-public interface AbstractMarketGatewayFactory {
-    MarketGatewayInterface createMarketGateway(String venue, String identifier);
+public interface AbstractMarketGatewayFactory<T> {
+    MarketGatewayInterface<T> createMarketGateway(String venue, String identifier);
 }

@@ -1,15 +1,13 @@
 package io.exp.gateway.fake;
 
-import io.exp.security.model.AbstractTradeFactory;
-import io.exp.security.model.BidAsk;
-import io.exp.security.model.BondTradeFactory;
-import io.exp.security.model.Trade;
+import io.exp.security.model.*;
 import lombok.RequiredArgsConstructor;
 
+import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
-public class FakeBondMarketGenerator {
+public class FakeBondMarketGenerator implements Serializable{
     protected double seedNotional;
     protected double seedPrice;
     protected String currency;
@@ -36,13 +34,13 @@ public class FakeBondMarketGenerator {
     static double randomValue(double mean, double stddev){
         return Math.max(THRESHOLD*mean, mean + ThreadLocalRandom.current().nextGaussian() * stddev);
     }
-    public Trade generateTrade(){
+    public BondTrade generateTrade(){
         String security = securityArray[ThreadLocalRandom.current().nextInt(0, securityArray.length)];
         double notional = randomValue(seedNotional, stddevNtl);
         double price = randomValue(seedPrice, stddevPrice);
         int bidAskInt = ThreadLocalRandom.current().nextInt(0,2);
         BidAsk bidask = bidAskInt==0?BidAsk.BID:BidAsk.ASK;
-        Trade trade = tradeFactory.createTrade(security, notional, price, currency, bidask);
+        BondTrade trade = (BondTrade)tradeFactory.createTrade(security, notional, price, currency, bidask);
         return trade;
     }
 

@@ -8,26 +8,26 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class GenericSubject implements Subject<Trade>{
+public class GenericSubject<T> implements Subject<T>{
     @Getter
     private String dataName;
 
     private Set<Observer> observerSet = Sets.newConcurrentHashSet();
 
     @Override
-    public void registerObserver(Observer<Trade> o) {
+    public void registerObserver(Observer<T> o) {
         if (!observerSet.contains(o)) {
             observerSet.add(o);
         }
     }
 
     @Override
-    public void removeObserver(Observer<Trade> o) {
+    public void removeObserver(Observer<T> o) {
         observerSet.remove(o);
     }
 
     @Override
-    public void notifyOservers(Trade msg) {
+    public void notifyOservers(T msg) {
         if (msg != null) {
             observerSet.forEach(o->{
                 o.update(msg);
