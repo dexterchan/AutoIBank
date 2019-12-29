@@ -3,17 +3,25 @@ package io.exp.gateway.fake;
 import io.exp.gateway.MarketGatewayInterface;
 import io.exp.security.model.BondTrade;
 import io.exp.security.model.Trade;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-
+@Slf4j
 public class FakeBondMarketGatewayProxy implements MarketGatewayInterface<BondTrade> {
-    private boolean isAlive = true;
+    private static volatile boolean isAlive = true;
     private int SLEEP_MS = 50;
     private FakeBondMarketGenerator fakeBondMarketGenerator = null;
-    private static ExecutorService executor = Executors.newFixedThreadPool(2);
+    private static ExecutorService executor = Executors.newFixedThreadPool(2,new ThreadFactory() {
+        public Thread newThread(Runnable r) {
+            Thread t = Executors.defaultThreadFactory().newThread(r);
+            t.setDaemon(true);
+            return t;
+        }
+    });
 
     public FakeBondMarketGatewayProxy(){
          double seedNotional = 1000000;
@@ -33,9 +41,10 @@ public class FakeBondMarketGatewayProxy implements MarketGatewayInterface<BondTr
 
     @Override
     public void subscribe(Consumer<BondTrade> tradeConsumer, Consumer<Throwable> throwableConsumer) {
-        isAlive = true;
+        //isAlive = true;
         executor.execute(()-> {
-            while (isAlive) {
+            log.debug("Start reading market data");
+            while (FakeBondMarketGatewayProxy.isAlive) {
                 BondTrade bondTrade = this.fakeBondMarketGenerator.generateTrade();
                 tradeConsumer.accept(bondTrade);
                 try {
@@ -43,12 +52,14 @@ public class FakeBondMarketGatewayProxy implements MarketGatewayInterface<BondTr
                 } catch (Exception ex) {
                 }
             }
+            log.debug("Stop reading market data");
         });
     }
 
     @Override
     public void unsubscribe() {
         isAlive = false;
+        log.debug("Stop subscription");
     }
 
     @Override
