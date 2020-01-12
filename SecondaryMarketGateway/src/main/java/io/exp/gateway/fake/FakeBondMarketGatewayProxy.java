@@ -27,8 +27,8 @@ public class FakeBondMarketGatewayProxy implements MarketGatewayInterface<BondTr
          double seedNotional = 1000000;
          double seedPrice = 100;
          String currency = "USD";
-         double stdDevNtl = seedNotional* 0.1;
-         double stdDevPrice = seedPrice * 0.1;
+         double stdDevNtl = seedNotional* 0.01;
+         double stdDevPrice = seedPrice * 0.01;
          String[] securityArray = new String[]{"ISIN1234", "ISIN4324", "CISP23434"};
 
          this.fakeBondMarketGenerator = new FakeBondMarketGenerator(seedNotional, seedPrice, currency, stdDevNtl, stdDevPrice, securityArray);

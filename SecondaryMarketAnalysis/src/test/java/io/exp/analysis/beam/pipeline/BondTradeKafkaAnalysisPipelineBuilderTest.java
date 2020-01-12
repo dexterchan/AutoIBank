@@ -25,7 +25,7 @@ class BondTradeKafkaAnalysisPipelineBuilderTest {
     @BeforeEach
     public void init(){
         arguments= new String[]{
-                "--windowDuration=500"
+                "--windowDuration=1000"
         };
     }
     @Test

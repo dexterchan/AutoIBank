@@ -12,6 +12,7 @@ import org.apache.beam.sdk.io.kafka.KafkaIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.transforms.Values;
 import org.apache.beam.sdk.transforms.windowing.FixedWindows;
+import org.apache.beam.sdk.transforms.windowing.SlidingWindows;
 import org.apache.beam.sdk.transforms.windowing.Window;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -34,8 +35,8 @@ public class BondTradeKafkaAnalysisPipelineBuilder implements BondTradeAnalysisP
 
         Pipeline pipeline = Pipeline.create(analysisOptions);
 
-        String kafkaServer = "localhost:9092";
-        String topic = "bondtrade";
+        String kafkaServer = analysisOptions.getKafkaServer();
+        String topic = analysisOptions.getKafkaInputTopic();
         AvroCoder<BondTrade> bondTradeAvroCoder= AvroCoder.of(BondTrade.class);;
         pipeline.getCoderRegistry().registerCoderForClass(BondTrade.class, bondTradeAvroCoder);
         pipeline.getCoderRegistry().registerCoderForClass(String.class, StringUtf8Coder.of());
@@ -49,7 +50,9 @@ public class BondTradeKafkaAnalysisPipelineBuilder implements BondTradeAnalysisP
                 .withoutMetadata() // PCollection<KV<Long, String>>
         ).apply(Values.<BondTrade>create())
                 .apply(Window.<BondTrade>into(
-                        FixedWindows.of(Duration.millis(analysisOptions.getWindowDuration()))));
+                        SlidingWindows.of(Duration.millis(analysisOptions.getWindowDuration()))
+                                .every(Duration.millis(analysisOptions.getSlideWindowInterval()))
+                ));
         this.analysisProbes = BondTradeAnalysisPipelineBuilderInterface.prepareAnalysisTransform( pBondTrades);
 
 
