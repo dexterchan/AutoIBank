@@ -6,7 +6,7 @@ import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.StreamingOptions;
 
 public interface AnalysisOptions extends PipelineOptions, StreamingOptions {
-    @Description("Numeric value of fixed window duration, in mini-second")
+    @Description("Numeric value of fixed window duration, in milli second")
     @Default.Integer(500)
     int getWindowDuration();
     void setWindowDuration(int value);
@@ -22,4 +22,13 @@ public interface AnalysisOptions extends PipelineOptions, StreamingOptions {
     Integer getAllowedLateness();
     void setAllowedLateness(Integer value);
 
+    @Description("Bid Price Output Topic")
+    @Default.String("projects/peer2peer/topics/autoibank_bidprice")
+    public String getBidPriceOutputTopic();
+    void setBidPriceOutputTopic(String value);
+
+    @Description("Ask Price Output Topic")
+    @Default.String("projects/peer2peer/topics/autoibank_askprice")
+    public String getAskPriceOutputTopic();
+    void setAskPriceOutputTopic(String value);
 }

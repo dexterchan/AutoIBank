@@ -36,10 +36,11 @@ public class FakeBondMarketGenerator implements Serializable{
     }
     public BondTrade generateTrade(){
         String security = securityArray[ThreadLocalRandom.current().nextInt(0, securityArray.length)];
-        double notional = randomValue(seedNotional, stddevNtl);
-        double price = randomValue(seedPrice, stddevPrice);
         int bidAskInt = ThreadLocalRandom.current().nextInt(0,2);
         BidAsk bidask = bidAskInt==0?BidAsk.BID:BidAsk.ASK;
+        double notional = randomValue(seedNotional, stddevNtl);
+        double price = randomValue(bidask==BidAsk.ASK?seedPrice*1.05:seedPrice*0.95, stddevPrice);
+
         BondTrade trade = (BondTrade)tradeFactory.createTrade(security, notional, price, currency, bidask);
         return trade;
     }

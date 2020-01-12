@@ -1,13 +1,12 @@
-package io.exp.analysis.beam.utils;
+package io.exp.analysis.beam.pipeline;
 
 import com.google.common.collect.Maps;
 import io.exp.analysis.DataSource.MarketTradeUnboundedSource;
-import io.exp.analysis.beam.PipelineBuilder;
+import io.exp.analysis.beam.utils.AnalysisOptions;
 import io.exp.gateway.AbstractMarketGatewayFactory;
 import io.exp.gateway.MarketGatewayInterface;
 import io.exp.gateway.fake.FakeBondMarketGatewayFactory;
 
-import io.exp.security.model.BidAsk;
 import io.exp.security.model.BondTrade;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -22,20 +21,17 @@ import org.apache.beam.sdk.transforms.windowing.FixedWindows;
 import org.apache.beam.sdk.transforms.windowing.Window;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
-import org.apache.beam.sdk.values.PCollectionList;
 import org.apache.beam.sdk.values.TypeDescriptors;
 import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.annotations.VisibleForTesting;
 import org.joda.time.Duration;
 
 import javax.annotation.Nonnull;
-import java.io.Serializable;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 @Slf4j
-public class BondTradeAnalysisPipelineBuilder implements PipelineBuilder, Serializable {
+public class BondTradeRealtimeAnalysisPipelineBuilder implements BondTradeAnalysisPipelineBuilderInterface {
     static final Duration FIVE_MINUTES = Duration.standardMinutes(5);
     static final Duration TEN_MINUTES = Duration.standardMinutes(10);
 
@@ -50,9 +46,7 @@ public class BondTradeAnalysisPipelineBuilder implements PipelineBuilder, Serial
     PCollection<BondTrade> pAllTrades=null;
 
     @Getter
-    PCollection<BondTrade> pBidTrades = null;
-    @Getter
-    PCollection<BondTrade> pAskTrades = null;
+    AnalysisProbes analysisProbes=null;
 
     @Getter
     MarketGatewayInterface<BondTrade> marketGatewayInterface=null;
@@ -77,25 +71,8 @@ public class BondTradeAnalysisPipelineBuilder implements PipelineBuilder, Serial
 
         pAllTrades = pipeline.apply(pipeLineName, Read.from(getMarketDataSource(venue, identifier)));
 
-
-        AnalysisProbes analysisProbes = prepareAnalysisTransform( pAllTrades, analysisOptions);
-        this.pBidTrades = analysisProbes.pBidTrades;
-        this.pAskTrades = analysisProbes.pAskTrades;
-
-        return pipeline;
-    }
-    private static class AnalysisProbes{
-        PCollection<BondTrade> pBidTrades = null;
-        PCollection<BondTrade> pAskTrades = null;
-        PCollection<KV<String, Double>> pBidAvgPrice = null;
-        PCollection<KV<String, Double>> pAskAvgPrice = null;
-    }
-
-    private static AnalysisProbes prepareAnalysisTransform(PCollection<BondTrade>pAllTrades ,AnalysisOptions analysisOptions){
-        AnalysisProbes probes = new AnalysisProbes();
-
         PCollection<BondTrade> pWindow = pAllTrades.apply(
-                Window.<BondTrade>into(FixedWindows.of(Duration.standardSeconds ( analysisOptions.getWindowDuration())))
+                Window.<BondTrade>into(FixedWindows.of(Duration.millis ( analysisOptions.getWindowDuration())))
                         // We will get early (speculative) results as well as cumulative
                         // processing of late data.
                         .triggering(
@@ -109,29 +86,12 @@ public class BondTradeAnalysisPipelineBuilder implements PipelineBuilder, Serial
                         .withAllowedLateness(Duration.standardMinutes(analysisOptions.getAllowedLateness()))
                         .accumulatingFiredPanes()
         );
-        PCollection<BondTrade> pAllTradesTimeStamp = pWindow.apply(
-                "AddEventTimestamps",
-                WithTimestamps.of((BondTrade i) -> i.getTimestamp().plus(5000)));
+        //PCollection<BondTrade> pAllTradesTimeStamp = pWindow.apply("AddEventTimestamps", WithTimestamps.of((BondTrade i) -> i.getTimestamp()));
 
+        this.analysisProbes = BondTradeAnalysisPipelineBuilderInterface.prepareAnalysisTransform( pWindow);
 
-        probes.pBidTrades = pAllTradesTimeStamp.apply(Filter.by(BidAskFilterFunc.apply(BidAsk.BID)));
-        probes.pAskTrades = pAllTradesTimeStamp.apply(Filter.by(BidAskFilterFunc.apply(BidAsk.ASK)));
-
-        probes.pBidAvgPrice = probes.pBidTrades.apply(new CalculateBondAvgPrice());
-        probes.pAskAvgPrice = probes.pAskTrades.apply(new CalculateBondAvgPrice());
-
-        return probes;
+        return pipeline;
     }
-
-    static Function<BidAsk,SerializableFunction<BondTrade, Boolean>  > BidAskFilterFunc = (bidAsk)->
-         new SerializableFunction<BondTrade, Boolean>() {
-            @Override
-            public Boolean apply(BondTrade bondTrade) {
-                return bondTrade.getAsset().getBidAsk()==bidAsk;
-            }
-        };
-
-
     @VisibleForTesting
     static class CalculateBondAvgPrice
             extends PTransform<PCollection<BondTrade>, PCollection<KV<String, Double>>> {

@@ -1,22 +1,30 @@
-package io.exp.analysis.beam.utils;
+package io.exp.analysis.beam.pipeline;
 
+import io.exp.analysis.beam.pipeline.BondTradeRealtimeAnalysisPipelineBuilder;
+import io.exp.analysis.beam.pipeline.check.CheckBidAskAvg;
+import io.exp.analysis.beam.pipeline.check.CheckBidAskTrade;
 import io.exp.gateway.MarketGatewayInterface;
 import io.exp.security.model.BidAsk;
 import io.exp.security.model.BondTrade;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.PipelineResult;
-import org.apache.beam.sdk.testing.PAssert;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.transforms.SerializableFunction;
+import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
-class BondTradeAnalysisPipelineBuilderTest {
+@Disabled
+@Tag("integration")
+class BondTradeRealtimeAnalysisPipelineBuilderTest {
     String [] arguments = null;
 
     @BeforeEach
@@ -28,18 +36,24 @@ class BondTradeAnalysisPipelineBuilderTest {
         };
     }
     @Test
-    void build() throws Exception{
-        BondTradeAnalysisPipelineBuilder pipelineBuilder = new BondTradeAnalysisPipelineBuilder();
+    void testStreamingMarketData() throws Exception{
+        BondTradeRealtimeAnalysisPipelineBuilder pipelineBuilder = new BondTradeRealtimeAnalysisPipelineBuilder();
         Pipeline pipeline = pipelineBuilder.build(arguments);
 
         MarketGatewayInterface marketGatewayInterface = pipelineBuilder.getMarketGatewayInterface();
 
-        PCollection<BondTrade> pBidTrades = pipelineBuilder.getPBidTrades();
-        PCollection<BondTrade> pAskTrades = pipelineBuilder.getPAskTrades();
-        //PAssert.that(pTrade).satisfies(new CheckTrade());
+        BondTradeRealtimeAnalysisPipelineBuilder.AnalysisProbes analysisProbes = pipelineBuilder.getAnalysisProbes();
+        PCollection<BondTrade> pBidTrades = analysisProbes.pBidTrades;
+        PCollection<BondTrade> pAskTrades = analysisProbes.pAskTrades;
 
         pBidTrades.apply("Check Bid Trades", ParDo.of(new CheckBidAskTrade(BidAsk.BID)));
         pAskTrades.apply("Check Ask Trades", ParDo.of(new CheckBidAskTrade(BidAsk.ASK)));
+
+        PCollection<KV<String, Double>> pBidAvgPrice = analysisProbes.pBidAvgPrice;
+        PCollection<KV<String, Double>> pAskAvgPrice = analysisProbes.pAskAvgPrice;
+        pBidAvgPrice.apply("Check Bid Avg Price", ParDo.of(new CheckBidAskAvg(BidAsk.BID)));
+        pAskAvgPrice.apply("Check Ask Avg Price", ParDo.of(new CheckBidAskAvg(BidAsk.ASK)));
+
         PipelineResult pipelineResult = pipeline.run();
 
         Thread.sleep(1000* 10);
@@ -50,17 +64,7 @@ class BondTradeAnalysisPipelineBuilderTest {
 
     }
 
-    static class CheckBidAskTrade extends DoFn<BondTrade, Void> {
-        BidAsk bidask=null;
-        public CheckBidAskTrade(BidAsk bidAsk){
-            this.bidask = bidAsk;
-        }
-        @ProcessElement
-        public void processElement(@Element BondTrade bondTrade, OutputReceiver<Void> out) throws Exception {
-                log.debug(bondTrade.toString());
-                assertThat(bondTrade.getAsset().getBidAsk()).isEqualTo(this.bidask);
-        }
-    }
+
 
     static class CheckTrade implements SerializableFunction<Iterable<BondTrade>, Void>{
         @Override

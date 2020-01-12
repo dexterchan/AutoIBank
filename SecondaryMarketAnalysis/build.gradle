@@ -21,6 +21,8 @@ dependencies {
     compile  "org.apache.beam:beam-sdks-java-core:$beamVersion"
     compile  "org.apache.beam:beam-sdks-java-io-google-cloud-platform:$beamVersion"
     compile  "org.apache.beam:beam-sdks-java-io-kafka:$beamVersion"
+    compile group: 'org.apache.beam', name: 'beam-sdks-java-io-redis', version: "$beamVersion"
+
 
     compile group: 'com.google.guava', name: 'guava', version: "$guavaVersion"
 
@@ -42,7 +44,7 @@ dependencies {
 test {
     useJUnitPlatform {
         //includeTags 'io.beam.exp.cryptorealtime.model','controllers'
-        excludeTags 'integration'
+        excludeTags 'integration','kafka'
     }
     testLogging.showStandardStreams = true
 
@@ -55,6 +57,19 @@ test {
 task integrationTest(type: Test) {
     useJUnitPlatform {
         includeTags 'integration'
+    }
+    check.dependsOn it
+    shouldRunAfter test
+    testLogging.showStandardStreams = true
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+task kafkaTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'kafka'
     }
     check.dependsOn it
     shouldRunAfter test
