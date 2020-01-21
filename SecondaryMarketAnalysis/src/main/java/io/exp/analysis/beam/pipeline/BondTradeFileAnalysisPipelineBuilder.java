@@ -16,6 +16,9 @@ public class BondTradeFileAnalysisPipelineBuilder implements BondTradeAnalysisPi
     @Getter
     AnalysisProbes analysisProbes=null;
 
+    @Getter
+    AnalysisOptions analysisOptions = null;
+
     public interface FileAnalysisOption extends AnalysisOptions {
 
         String getFileName();
@@ -30,6 +33,7 @@ public class BondTradeFileAnalysisPipelineBuilder implements BondTradeAnalysisPi
                 .withoutStrictParsing()
                 .create()
                 .as(FileAnalysisOption.class);
+        this.analysisOptions = fileAnalysisOption;
         fileAnalysisOption.setStreaming(false);
         Pipeline pipeline = Pipeline.create(fileAnalysisOption);
         PCollection<BondTrade> pBondTrades =

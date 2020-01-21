@@ -92,8 +92,14 @@ public class Main {
         observerList.add(TradeObserverConsoleLogObserver);
         if (bondTradeAvroFileObserver!=null)
             observerList.add(bondTradeAvroFileObserver);
+        else{
+            log.info("Not receive any -o flag. No File observer creation");
+        }
         if (bondTradeKafkaObserver!=null)
             observerList.add(bondTradeKafkaObserver);
+        else{
+            log.info("Not receive any -k and -t flag. No Kafka observer creation");
+        }
 
         marketGatewayInterface.connect();
         MarketRegistry.registerMarket(marketGatewayInterface, observerList);

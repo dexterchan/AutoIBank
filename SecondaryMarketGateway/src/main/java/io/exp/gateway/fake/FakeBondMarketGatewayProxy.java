@@ -5,14 +5,16 @@ import io.exp.security.model.BondTrade;
 import io.exp.security.model.Trade;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.concurrent.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @Slf4j
 public class FakeBondMarketGatewayProxy implements MarketGatewayInterface<BondTrade> {
     private static volatile boolean isAlive = true;
+    private static final int numberOfSecurities = 10;
     private int SLEEP_MS = 50;
     private FakeBondMarketGenerator fakeBondMarketGenerator = null;
     private static ExecutorService executor = Executors.newFixedThreadPool(2,new ThreadFactory() {
@@ -23,13 +25,29 @@ public class FakeBondMarketGatewayProxy implements MarketGatewayInterface<BondTr
         }
     });
 
+    static String[] createSecurityNames(int numberOfSecurities){
+        List<String> isin = IntStream.range(0,numberOfSecurities/2).boxed().map(
+                i-> {
+                    long number = ThreadLocalRandom.current().nextLong(1000000000);
+                    return String.format("ISIN%09d", number);
+                }
+        ).collect(Collectors.toList());
+        List<String> cisp = IntStream.range(0,numberOfSecurities/2).boxed().map(
+                i-> {
+                    long number = ThreadLocalRandom.current().nextLong(1000000000);
+                    return String.format("CISP%09d", number);
+                }
+        ).collect(Collectors.toList());
+        isin.addAll(cisp);
+        return isin.toArray(String[]::new);
+    }
     public FakeBondMarketGatewayProxy(){
          double seedNotional = 1000000;
          double seedPrice = 100;
          String currency = "USD";
          double stdDevNtl = seedNotional* 0.01;
          double stdDevPrice = seedPrice * 0.01;
-         String[] securityArray = new String[]{"ISIN1234", "ISIN4324", "CISP23434"};
+         String[] securityArray = createSecurityNames(numberOfSecurities);
 
          this.fakeBondMarketGenerator = new FakeBondMarketGenerator(seedNotional, seedPrice, currency, stdDevNtl, stdDevPrice, securityArray);
     }

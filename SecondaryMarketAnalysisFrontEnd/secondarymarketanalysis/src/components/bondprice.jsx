@@ -1,21 +1,33 @@
 import React, { Component } from "react";
 
-import { getBondPrice } from "../services/fakeBondPrice";
+import { getBondPrice, getBondSecurities } from "../services/RestfulBondPrice";
 import "./css/bondprice.css";
 import BondpriceTable from "./bondpriceTable";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class BondPrice extends Component {
   state = {
     bondPriceLst: [],
+    securities: [],
     searchQuery: "",
     currentPage: 1,
     sortColumn: { path: "_id", order: "asc" }
   };
 
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({ bondPriceLst: getBondPrice() });
-    }, 500);
+  async componentDidMount() {
+    const securities = await getBondSecurities("*");
+
+    this.setState({ securities });
+    setInterval(async () => {
+      Promise.all(
+        securities.map(async security => await getBondPrice(security))
+      ).then(bondPriceLstRaw => {
+        //console.log(bondPriceLstRaw);
+        const bondPriceLst = bondPriceLstRaw.filter(p => p !== undefined);
+        this.setState({ bondPriceLst });
+      });
+    }, 2000);
   }
 
   handleSort = sortColumn => {
@@ -30,6 +42,7 @@ class BondPrice extends Component {
     const { bondPriceLst, sortColumn } = this.state;
     return (
       <div className="bondprice-header">
+        <ToastContainer />
         <div className="row">
           <div className="col">
             {count === 0 && (

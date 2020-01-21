@@ -47,5 +47,14 @@ public interface AnalysisOptions extends PipelineOptions, StreamingOptions {
     public String getAskPriceOutputTopic();
     void setAskPriceOutputTopic(String value);
 
+    @Description("Redis Host Name for cache")
+    @Default.String("localhost")
+    public String getRedisHostname();
+    void setRedisHostname(String value);
+
+    @Description("Redis port")
+    @Default.Integer(6379)
+    public int getRedisPort();
+    void setRedisPort(int port);
 
 }

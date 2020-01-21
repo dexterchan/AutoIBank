@@ -23,10 +23,13 @@ public class BondTradeKafkaAnalysisPipelineBuilder implements BondTradeAnalysisP
     @Getter
     AnalysisProbes analysisProbes=null;
 
+    @Getter
+    AnalysisOptions analysisOptions = null;
+
     @Override
     public Pipeline build(String[] args) {
         PipelineOptionsFactory.register(AnalysisOptions.class);
-        AnalysisOptions analysisOptions = PipelineOptionsFactory.fromArgs(args)
+        analysisOptions = PipelineOptionsFactory.fromArgs(args)
                 .withValidation()
                 .withoutStrictParsing()
                 .create()

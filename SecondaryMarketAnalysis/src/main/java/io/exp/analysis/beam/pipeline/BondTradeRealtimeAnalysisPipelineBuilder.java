@@ -51,11 +51,14 @@ public class BondTradeRealtimeAnalysisPipelineBuilder implements BondTradeAnalys
     @Getter
     MarketGatewayInterface<BondTrade> marketGatewayInterface=null;
 
+    @Getter
+    AnalysisOptions analysisOptions = null;
+
     @Nonnull
     @Override
     public Pipeline build(String[] args) {
         PipelineOptionsFactory.register(AnalysisOptions.class);
-        AnalysisOptions analysisOptions = PipelineOptionsFactory.fromArgs(args)
+        analysisOptions = PipelineOptionsFactory.fromArgs(args)
                 .withValidation()
                 .withoutStrictParsing()
                 .create()

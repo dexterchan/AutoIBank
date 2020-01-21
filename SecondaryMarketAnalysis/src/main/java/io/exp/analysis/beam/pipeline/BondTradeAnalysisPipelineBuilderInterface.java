@@ -2,6 +2,7 @@ package io.exp.analysis.beam.pipeline;
 
 import io.exp.analysis.beam.PipelineBuilder;
 import io.exp.analysis.beam.pipeline.BondTradeRealtimeAnalysisPipelineBuilder;
+import io.exp.analysis.beam.utils.AnalysisOptions;
 import io.exp.security.model.BidAsk;
 import io.exp.security.model.BondTrade;
 import lombok.Getter;
@@ -20,15 +21,13 @@ public interface BondTradeAnalysisPipelineBuilderInterface extends PipelineBuild
 
     public AnalysisProbes getAnalysisProbes();
 
+    public AnalysisOptions getAnalysisOptions();
 
-    static class AnalysisProbes{
-        @Getter
+    @Getter
+    public static class AnalysisProbes{
         PCollection<BondTrade> pBidTrades = null;
-        @Getter
         PCollection<BondTrade> pAskTrades = null;
-        @Getter
         PCollection<KV<String, Double>> pBidAvgPrice = null;
-        @Getter
         PCollection<KV<String, Double>> pAskAvgPrice = null;
     }
 
