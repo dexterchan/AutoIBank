@@ -42,3 +42,12 @@ kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 
 kafkacat -b localhost:9092 -P -t bondtrade 
 kafkacat -b localhost:9092 -C -t bondtrade
 ````
+
+### Gateway Run
+````
+java -jar SecondaryMarketGateway/build/libs/SecondaryMarketGateway-1.0-SNAPSHOT.jar -k localhost:9092 -t bondtrade
+````
+### Analysis Run
+````
+java -jar SecondaryMarketAnalysis/build/libs/SecondaryMarketAnalysis-1.0-SNAPSHOT.jar 
+````
