@@ -33,6 +33,7 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 
+
 	compile group: 'redis.clients', name: 'jedis', version: '3.2.0'
 
 }

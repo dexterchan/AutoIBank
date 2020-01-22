@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 @Slf4j
 public class FakeBondMarketGatewayProxy implements MarketGatewayInterface<BondTrade> {
     private static volatile boolean isAlive = true;
-    private static final int numberOfSecurities = 3;
+    private static final int numberOfSecurities = 10;
     private int SLEEP_MS = 50;
     private FakeBondMarketGenerator fakeBondMarketGenerator = null;
     private static ExecutorService executor = Executors.newFixedThreadPool(2,new ThreadFactory() {
