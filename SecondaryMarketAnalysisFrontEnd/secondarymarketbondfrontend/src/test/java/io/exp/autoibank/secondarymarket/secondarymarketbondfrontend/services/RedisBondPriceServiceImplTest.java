@@ -22,7 +22,7 @@ class RedisBondPriceServiceImplTest {
 
     @Test
     void happyPathGetBondPrice() {
-        String identifier ="CISP23434";
+        String identifier ="ISIN270557997";
 
         BondPriceDto bondPriceDto = bondPriceService.getBondPrice(identifier);
         assertAll(

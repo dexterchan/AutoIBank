@@ -31,5 +31,11 @@ const getBondPrice = async identifier => {
     toast.error(`An unexpected error occurred` + ex);
   }
 };
-
-export { getBondSecurities, getBondPrice };
+const sayHello = async msg => {
+  const p = new Promise((resolve, reject) => {
+    resolve("Hello," + msg);
+  });
+  const finalMsg = await p;
+  return finalMsg;
+};
+export { getBondSecurities, getBondPrice, sayHello };

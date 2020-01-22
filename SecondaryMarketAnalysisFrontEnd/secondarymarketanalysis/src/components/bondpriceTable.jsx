@@ -1,19 +1,38 @@
 import React, { Component } from "react";
+import { getBondPrice } from "../services/RestfulBondPrice";
 import Table from "./common/table";
 import "./css/pricetable.css";
+import "./common/asyncUpdateField";
+import AsyncUpdateField from "./common/asyncUpdateField";
 
 class BondpriceTable extends Component {
+  rounding = 2;
   columns = [
     { path: "_id", label: "Identifier" },
-    { path: "bid", label: "Bid", content: price => price.bid.toFixed(2) },
-    { path: "ask", label: "Ask", content: price => price.ask.toFixed(2) }
+    {
+      path: "price",
+      label: "Bid/Ask",
+      content: sec => (
+        <AsyncUpdateField
+          asyncFunc={async () => {
+            const price = await getBondPrice(sec._id);
+            return (
+              price.bid.toFixed(this.rounding) +
+              "/" +
+              price.ask.toFixed(this.rounding)
+            );
+          }}
+          period={500}
+        />
+      )
+    }
   ];
   render() {
-    const { bondPricelst, onSort, sortColumn } = this.props;
+    const { securities, onSort, sortColumn } = this.props;
     return (
       <Table
         columns={this.columns}
-        data={bondPricelst}
+        data={securities}
         sortColumn={sortColumn}
         onSort={onSort}
       />

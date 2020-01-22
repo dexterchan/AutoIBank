@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { getBondPrice, getBondSecurities } from "../services/RestfulBondPrice";
+import { getBondSecurities } from "../services/RestfulBondPrice";
 import "./css/bondprice.css";
 import BondpriceTable from "./bondpriceTable";
 import { ToastContainer } from "react-toastify";
@@ -16,42 +16,34 @@ class BondPrice extends Component {
   };
 
   async componentDidMount() {
-    const securities = await getBondSecurities("*");
-
+    const securityNames = await getBondSecurities("*");
+    const securities = securityNames.map(name => {
+      const obj = { _id: name, price: name };
+      return obj;
+    });
     this.setState({ securities });
-    setInterval(async () => {
-      Promise.all(
-        securities.map(async security => await getBondPrice(security))
-      ).then(bondPriceLstRaw => {
-        //console.log(bondPriceLstRaw);
-        const bondPriceLst = bondPriceLstRaw.filter(p => p !== undefined);
-        this.setState({ bondPriceLst });
-      });
-    }, 2000);
   }
 
   handleSort = sortColumn => {
     this.setState({ sortColumn });
   };
-
+  //<ToastContainer />
   render() {
-    const { length: count } = this.state.bondPriceLst;
+    const { securities, sortColumn } = this.state;
+    let count = securities.count;
     if (count === 0) return <p>There are no bond price to display.</p>;
     let totalCount = count;
-
-    const { bondPriceLst, sortColumn } = this.state;
     return (
       <div className="bondprice-header">
-        <ToastContainer />
         <div className="row">
           <div className="col">
             {count === 0 && (
               <p className="m-5 "> Showing {totalCount} bonds.</p>
             )}
             <BondpriceTable
-              bondPricelst={bondPriceLst}
               onSort={this.handleSort}
               sortColumn={sortColumn}
+              securities={securities}
             />
           </div>
         </div>
