@@ -34,10 +34,28 @@ dependencies {
 	}
 
 
-	compile group: 'redis.clients', name: 'jedis', version: '3.2.0'
+	implementation group: 'redis.clients', name: 'jedis', version: '3.2.0'
 
+	runtimeOnly project(':npm_FrontEnd')
+}
+/*
+task buildWebApp(type: Exec) {
+	println ("Build web app")
+	println (project.path + '/../npm_FrontEnd')
+    workingDir project.path + '/../npm_FrontEnd'
+    commandLine "npm", "run", "build"
+
+    println ("Finish web app")
 }
 
+task copyStaticWeb(type: Copy, dependsOn: buildWebApp) {
+	println("COpy files")
+    doFirst{
+        delete "src/main/resources/static/"
+    }
+    from project.path + "/../npm_FrontEnd/build"
+    into "src/main/resources/static"
+}*/
 
 test {
 	useJUnitPlatform {

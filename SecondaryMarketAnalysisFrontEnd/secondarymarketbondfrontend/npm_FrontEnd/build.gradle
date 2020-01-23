@@ -1,0 +1,53 @@
+plugins {
+    id "com.moowork.node" version "1.2.0"
+}
+
+apply plugin: 'base'
+apply plugin: "com.moowork.node"
+
+node {
+    version = "13.2.0"
+    download = false
+}
+
+task bundle(type: NpmTask, dependsOn: npmInstall) {
+    args = ['run', 'build']
+}
+
+task packageNpmApp(type: Zip) {
+    dependsOn npm_run_build
+    baseName 'npm-app'
+    extension 'jar'
+    destinationDir file("${projectDir}/build_packageNpmApp")
+    from('build') {
+        // optional path under which output will be visible in Java classpath, e.g. static resources path
+        into 'static'
+    }
+
+}
+configurations {
+
+    npmResources
+
+}
+
+configurations.default.extendsFrom(configurations.npmResources)
+artifacts {
+
+    npmResources(packageNpmApp.archivePath) {
+
+        builtBy packageNpmApp
+
+        type "jar"
+
+    }
+
+}
+//assemble.dependsOn(bundle)
+assemble.dependsOn packageNpmApp
+
+clean {
+
+    delete packageNpmApp.archivePath
+
+}
