@@ -37,6 +37,7 @@ public class RedisBondPriceServiceImpl implements BondPriceService {
             bondPriceDto = BondPriceDto.builder().identifier(identifier)
                     .bid(bid_value)
                     .ask(ask_value).build();
+            log.debug(bondPriceDto.toString());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         } finally {
