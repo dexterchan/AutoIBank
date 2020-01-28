@@ -35,7 +35,7 @@ public class Main {
     final static Observer<BondTrade> TradeObserverConsoleLogObserver = new Observer<BondTrade>() {
         @Override
         public void update(BondTrade msg) {
-            log.debug(msg.toString());
+            //log.debug(msg.toString());
         }
 
         @Override

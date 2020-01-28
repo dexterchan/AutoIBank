@@ -2,4 +2,5 @@ rootProject.name = 'autoibank'
 include 'SecondaryMarketAnalysis'
 include 'BusinessModel'
 include 'SecondaryMarketGateway'
+include 'InteractiveBrokerClient'
 

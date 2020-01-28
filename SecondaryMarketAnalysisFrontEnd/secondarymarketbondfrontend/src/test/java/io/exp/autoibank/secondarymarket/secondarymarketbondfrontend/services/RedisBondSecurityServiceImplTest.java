@@ -1,20 +1,20 @@
 package io.exp.autoibank.secondarymarket.secondarymarketbondfrontend.services;
 
-import lombok.extern.slf4j.Slf4j;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Tag("integration")
-@Slf4j
 class RedisBondSecurityServiceImplTest {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(RedisBondSecurityServiceImplTest.class);
     @Autowired
     BondSecurityService bondSecurityService;
 

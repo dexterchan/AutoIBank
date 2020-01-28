@@ -24,5 +24,6 @@ ext{
     jacksonVersion = '2.10.1'
     guavaVersion = '28.1-jre'
     cliVersion = '1.4'
-    kafkaVersion='2.4.0'
+    kafkaVersion = '2.4.0'
+
 }

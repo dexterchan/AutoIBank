@@ -5,7 +5,7 @@ import io.exp.autoibank.secondarymarket.secondarymarketbondfrontend.web.model.Bo
 import org.springframework.stereotype.Service;
 
 
-
+@Service
 public class BondPriceServiceImpl implements BondPriceService {
 
     @Override

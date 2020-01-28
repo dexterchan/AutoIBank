@@ -5,6 +5,7 @@ package io.exp.autoibank.secondarymarket.secondarymarketbondfrontend.web.control
 import io.exp.autoibank.secondarymarket.secondarymarketbondfrontend.services.BondPriceService;
 import io.exp.autoibank.secondarymarket.secondarymarketbondfrontend.web.model.BondPriceDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class BondPriceController {
     @Autowired
+    @Qualifier("redisBondPriceServiceImpl")
     private BondPriceService bondPriceService;
 
     @GetMapping("/{id}")
