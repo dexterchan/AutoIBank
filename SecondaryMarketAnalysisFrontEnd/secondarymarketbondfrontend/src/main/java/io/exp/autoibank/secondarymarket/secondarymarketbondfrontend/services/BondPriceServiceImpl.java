@@ -2,10 +2,12 @@ package io.exp.autoibank.secondarymarket.secondarymarketbondfrontend.services;
 
 
 import io.exp.autoibank.secondarymarket.secondarymarketbondfrontend.web.model.BondPriceDto;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@Primary
 public class BondPriceServiceImpl implements BondPriceService {
 
     @Override
