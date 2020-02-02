@@ -1,11 +1,12 @@
 package io.exp.gateway.fake;
 
 import io.exp.security.model.Trade;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-
+@Slf4j
 class FakeBondMarketGeneratorTest {
     static int MAX = 1000;
     @Test
@@ -18,6 +19,7 @@ class FakeBondMarketGeneratorTest {
         FakeBondMarketGenerator fakeBondMarketGenerator = new FakeBondMarketGenerator(seedNotional, seedPrice, currency, seedNotional*0.1, seedPrice*0.1, securityArray);
         while (cnt<MAX){
             Trade trade = fakeBondMarketGenerator.generateTrade();
+            System.out.println(trade.toString());
             assertAll(
                     ()->{
                         assertThat(trade.getAsset().getNotional()).isGreaterThan(seedNotional*FakeBondMarketGenerator.THRESHOLD);

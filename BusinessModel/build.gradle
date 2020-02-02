@@ -1,6 +1,16 @@
-plugins {
-    id 'java'
+apply plugin: 'java'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.commercehub.gradle.plugin:gradle-avro-plugin:0.17.0"
+    }
 }
+
+apply plugin: "com.commercehub.gradle.plugin.avro"
+//apply plugin: "com.commercehub.gradle.plugin.avro-base"
 
 group 'io.exp'
 version '1.0-SNAPSHOT'
@@ -24,11 +34,22 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
+    compile "org.apache.avro:avro:${avroVersion}"
+    //compile "org.apache.avro:avro:1.8.2"
+
     testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testCompile "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
     testCompile group: 'org.assertj', name: 'assertj-core', version: "$assetjVersion"
 }
+/*
+task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {
+    print ("Run Avro")
+    source("src/resources/avro")
+    outputDir = file("dest/avro")
+}*/
+
+//compileJava.source(generateAvro.outputs)
 
 test {
     useJUnitPlatform {

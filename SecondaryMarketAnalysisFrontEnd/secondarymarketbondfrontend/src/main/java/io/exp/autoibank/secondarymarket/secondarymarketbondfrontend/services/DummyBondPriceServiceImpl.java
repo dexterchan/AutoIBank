@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Primary
-public class BondPriceServiceImpl implements BondPriceService {
+public class DummyBondPriceServiceImpl implements BondPriceService {
 
     @Override
     public BondPriceDto getBondPrice(String identifier) {

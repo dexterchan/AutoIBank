@@ -3,6 +3,7 @@ package io.exp.autoibank.secondarymarket.secondarymarketbondfrontend.services;
 import io.exp.autoibank.secondarymarket.secondarymarketbondfrontend.utils.JedisConnectionFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 @Slf4j
 @Service
+@Profile({"LIVE", "default"})
 public class RedisBondSecurityServiceImpl implements BondSecurityService {
     @Autowired
     JedisConnectionFactory jedisConnectionFactory;
