@@ -1,0 +1,82 @@
+[
+  {
+    "expected_maturity_date" : "2034-03-07",
+    "original_maturity" : "15-year (15 年)",
+    "isin_code" : "HK0000486388",
+    "coupon" : "2.02"
+  },{
+    "expected_maturity_date" : "2032-03-02",
+    "original_maturity" : "15-year (15 年)",
+    "isin_code" : "HK0000329679",
+    "coupon" : "1.89"
+  },{
+    "expected_maturity_date" : "2030-07-16",
+    "original_maturity" : "15-year (15 年)",
+    "isin_code" : "HK0000257821",
+    "coupon" : "2.13"
+  },{
+    "expected_maturity_date" : "2029-01-17",
+    "original_maturity" : "10-year (10 年)",
+    "isin_code" : "HK0000474293",
+    "coupon" : "1.97"
+  },{
+    "expected_maturity_date" : "2027-06-29",
+    "original_maturity" : "10-year (10 年)",
+    "isin_code" : "HK0000345436",
+    "coupon" : "1.25"
+  },{
+    "expected_maturity_date" : "2026-01-21",
+    "original_maturity" : "10-year (10 年)",
+    "isin_code" : "HK0000280708",
+    "coupon" : "1.68"
+  },{
+    "expected_maturity_date" : "2024-08-07",
+    "original_maturity" : "10-year (10 年)",
+    "isin_code" : "HK0000209236",
+    "coupon" : "2.22"
+  },{
+    "expected_maturity_date" : "2023-01-17",
+    "original_maturity" : "10-year (10 年)",
+    "isin_code" : "HK0000135431",
+    "coupon" : "1.10"
+  },{
+    "expected_maturity_date" : "2022-07-29",
+    "original_maturity" : "3-year (3 年)",
+    "isin_code" : "HK0000515046",
+    "coupon" : "Floating (浮息)"
+  },{
+    "expected_maturity_date" : "2022-05-18",
+    "original_maturity" : "5-year (5 年)",
+    "isin_code" : "HK0000339298",
+    "coupon" : "1.16"
+  },{
+    "expected_maturity_date" : "2021-12-17",
+    "original_maturity" : "3-year (3 年)",
+    "isin_code" : "HK0000464617",
+    "coupon" : "Floating (浮息)"
+  },{
+    "expected_maturity_date" : "2021-08-04",
+    "original_maturity" : "10-year (10 年)",
+    "isin_code" : "HK0000085537",
+    "coupon" : "2.46"
+  },{
+    "expected_maturity_date" : "2020-11-05",
+    "original_maturity" : "5-year (5 年)",
+    "isin_code" : "HK0000271582",
+    "coupon" : "0.91"
+  },{
+    "expected_maturity_date" : "2020-06-23",
+    "original_maturity" : "3-year (3 年)",
+    "isin_code" : "HK0000340619",
+    "coupon" : "Floating (浮息)"
+  },{
+    "expected_maturity_date" : "2020-02-05",
+    "original_maturity" : "5-year (5 年)",
+    "isin_code" : "HK0000235769",
+    "coupon" : "1.06"
+  },{
+    "expected_maturity_date" : "2020-01-13",
+    "original_maturity" : "10-year (10 年)",
+    "isin_code" : "HK0000059292",
+    "coupon" : "2.93"
+  }]
