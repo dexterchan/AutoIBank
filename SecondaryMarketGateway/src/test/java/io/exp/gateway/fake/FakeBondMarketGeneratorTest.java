@@ -1,6 +1,7 @@
 package io.exp.gateway.fake;
 
-import io.exp.security.model.Trade;
+
+import io.exp.security.model.avro.BondTrade;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -8,17 +9,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 class FakeBondMarketGeneratorTest {
-    static int MAX = 1000;
+    static int MAX = 2;
     @Test
     void generateTrade() {
         int cnt = 0;
         double seedNotional = 1000000;
         double seedPrice = 100;
         String currency = "USD";
-        String[] securityArray = {"ISIN1234", "ISIN4324", "CISP23434"};
+        String[] securityArray = FakeBondMarketGatewayProxy.createSecurityNames(5);//{"ISIN1234", "ISIN4324", "CISP23434"};
         FakeBondMarketGenerator fakeBondMarketGenerator = new FakeBondMarketGenerator(seedNotional, seedPrice, currency, seedNotional*0.1, seedPrice*0.1, securityArray);
         while (cnt<MAX){
-            Trade trade = fakeBondMarketGenerator.generateTrade();
+            BondTrade trade = fakeBondMarketGenerator.generateTrade();
             System.out.println(trade.toString());
             assertAll(
                     ()->{

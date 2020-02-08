@@ -1,15 +1,13 @@
 package io.exp.analysis.beam.pipeline;
 
-import io.exp.analysis.beam.pipeline.BondTradeRealtimeAnalysisPipelineBuilder;
 import io.exp.analysis.beam.pipeline.check.CheckBidAskAvg;
 import io.exp.analysis.beam.pipeline.check.CheckBidAskTrade;
 import io.exp.gateway.MarketGatewayInterface;
-import io.exp.security.model.BidAsk;
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BidAsk;
+import io.exp.security.model.avro.BondTrade;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.PipelineResult;
-import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.transforms.SerializableFunction;
 import org.apache.beam.sdk.values.KV;

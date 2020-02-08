@@ -3,7 +3,6 @@ package io.exp.gateway;
 import io.exp.gateway.observe.GenericSubject;
 import io.exp.gateway.observe.Observer;
 import io.exp.gateway.observe.Subject;
-import io.exp.security.model.Trade;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;

@@ -1,8 +1,7 @@
 package io.exp.gateway.util;
 
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BondTrade;
 import org.apache.beam.sdk.coders.AvroCoder;
-import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serializer;
 
 import java.io.ByteArrayOutputStream;

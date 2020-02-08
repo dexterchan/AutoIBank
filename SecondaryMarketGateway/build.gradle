@@ -28,7 +28,7 @@ repositories {
 mainClassName = 'io.exp.gateway.Main'
 
 dependencies {
-    compile project(':BusinessModel')
+    compile project(':AvroBusinessModel')
 
     compile group: 'com.google.code.gson', name: 'gson', version: "$gsonVersion"
     compileOnly("org.projectlombok:lombok:${lombokVersion}")

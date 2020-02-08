@@ -1,7 +1,7 @@
 package io.exp.analysis.beam.utils;
 
 
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BondTrade;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.beam.sdk.coders.AvroCoder;
 import org.apache.kafka.common.serialization.Deserializer;

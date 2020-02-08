@@ -3,7 +3,7 @@ package io.exp.analysis.beam.utils.redis;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import io.exp.security.model.BondSecurity;
+import io.exp.security.model.avro.BondSecurity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

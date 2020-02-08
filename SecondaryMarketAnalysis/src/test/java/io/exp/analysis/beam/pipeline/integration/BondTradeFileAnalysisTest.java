@@ -7,7 +7,7 @@ import io.exp.analysis.beam.pipeline.BondTradeAnalysisPipelineBuilderInterface;
 import io.exp.analysis.beam.pipeline.BondTradeFileAnalysisPipelineBuilder;
 import io.exp.analysis.beam.pipeline.BondTradeRealtimeAnalysisPipelineBuilder;
 
-import io.exp.security.model.BidAsk;
+import io.exp.security.model.avro.BidAsk;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.PipelineResult;
 import org.apache.beam.sdk.values.KV;

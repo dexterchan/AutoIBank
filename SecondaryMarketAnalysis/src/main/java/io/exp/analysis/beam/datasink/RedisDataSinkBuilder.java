@@ -1,6 +1,6 @@
 package io.exp.analysis.beam.datasink;
 
-import io.exp.security.model.BidAsk;
+import io.exp.security.model.avro.BidAsk;
 import org.apache.beam.sdk.io.redis.RedisIO;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.ParDo;

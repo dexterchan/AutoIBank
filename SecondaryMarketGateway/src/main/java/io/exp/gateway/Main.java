@@ -5,26 +5,11 @@ import io.exp.gateway.fake.FakeBondMarketGatewayFactory;
 import io.exp.gateway.observe.BondTradeAvroFileObserver;
 import io.exp.gateway.observe.BondTradeAvroKafkaObserver;
 import io.exp.gateway.observe.Observer;
-import io.exp.security.model.BondTrade;
-import io.exp.security.model.Trade;
+import io.exp.security.model.avro.BondTrade;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.avro.file.CodecFactory;
-import org.apache.avro.file.DataFileConstants;
-import org.apache.avro.file.DataFileWriter;
-import org.apache.avro.generic.GenericDatumWriter;
-import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.io.DatumWriter;
-import org.apache.avro.reflect.ReflectDatumWriter;
-import org.apache.beam.sdk.coders.AvroCoder;
 import org.apache.commons.cli.*;
 
 
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;

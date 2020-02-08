@@ -1,8 +1,7 @@
 package io.exp.gateway.fake;
 
 import io.exp.gateway.MarketGatewayInterface;
-import io.exp.security.model.BondTrade;
-import io.exp.security.model.Trade;
+import io.exp.security.model.avro.BondTrade;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

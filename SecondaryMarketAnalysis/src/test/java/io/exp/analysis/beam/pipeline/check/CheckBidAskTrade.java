@@ -1,7 +1,7 @@
 package io.exp.analysis.beam.pipeline.check;
 
-import io.exp.security.model.BidAsk;
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BidAsk;
+import io.exp.security.model.avro.BondTrade;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.beam.sdk.transforms.DoFn;
 

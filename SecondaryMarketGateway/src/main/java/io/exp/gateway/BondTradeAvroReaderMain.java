@@ -2,8 +2,8 @@ package io.exp.gateway;
 
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
-import io.exp.security.model.BidAsk;
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BidAsk;
+import io.exp.security.model.avro.BondTrade;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.beam.sdk.io.AvroSource;
@@ -82,7 +82,7 @@ public class BondTradeAvroReaderMain {
         Map<String, Integer> NumberOfTradePerSec = Maps.newHashMap();
         Map<String, Double> SumOfPricePerSec = Maps.newHashMap();
         bondTrades.stream().filter(
-                bondTrade->bondTrade.getAsset().getBidAsk() == bidask
+                bondTrade->bondTrade.getAsset().getBidask() == bidask
         ).forEach((bondTrade)->{
             String SecId = bondTrade.getAsset().getSecurityId();
             Double price = bondTrade.getAsset().getPrice();

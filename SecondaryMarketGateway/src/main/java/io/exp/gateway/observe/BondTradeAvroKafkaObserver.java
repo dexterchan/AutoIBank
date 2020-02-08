@@ -1,7 +1,7 @@
 package io.exp.gateway.observe;
 
 import io.exp.gateway.util.BondTradeAvroSerializer;
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BondTrade;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;

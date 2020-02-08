@@ -1,4 +1,4 @@
-package io.exp.security.model;
+package io.exp.security.model.avro;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

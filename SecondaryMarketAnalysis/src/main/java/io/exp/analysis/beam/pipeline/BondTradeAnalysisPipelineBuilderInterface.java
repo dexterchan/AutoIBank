@@ -1,10 +1,9 @@
 package io.exp.analysis.beam.pipeline;
 
 import io.exp.analysis.beam.PipelineBuilder;
-import io.exp.analysis.beam.pipeline.BondTradeRealtimeAnalysisPipelineBuilder;
 import io.exp.analysis.beam.utils.AnalysisOptions;
-import io.exp.security.model.BidAsk;
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BidAsk;
+import io.exp.security.model.avro.BondTrade;
 import lombok.Getter;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.transforms.Filter;

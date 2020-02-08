@@ -1,4 +1,4 @@
-package io.exp.security.model;
+package io.exp.security.model.avro;
 
 import org.apache.beam.sdk.coders.AvroCoder;
 import org.junit.jupiter.api.Test;
@@ -10,24 +10,26 @@ import java.io.IOException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class BondTradeFactoryTest {
+class BondTradeFactoryImplTest {
 
     @Test
     void createTrade() {
-        AbstractTradeFactory tradeFactory = new BondTradeFactory();
+        AbstractTradeFactory<BondTrade> tradeFactory = new BondTradeFactoryImpl();
         String securityId = "ISIN0123";
         double notional = 1000000;
         double price = 100;
         String currency = "USD";
+        String cust = "ABCD";
         BidAsk bidAsk = BidAsk.BID;
-        Trade trade = tradeFactory.createTrade(securityId, notional, price, currency, bidAsk);
+        String TradeDate = "2018-01-04";
+        BondTrade trade = tradeFactory.createTrade(securityId,cust,TradeDate, notional, price, currency, bidAsk);
 
 
         assertNotNull(trade);
         assertNotNull(trade.getAsset());
         assertAll(
                 () -> {
-                    assertEquals(trade.getAsset().getTradeType(), "BOND");
+                    assertEquals(trade.getTradeType(), "BOND");
                 },
                 () -> {
                     assertEquals(trade.getAsset().getNotional(), notional);
@@ -36,40 +38,39 @@ class BondTradeFactoryTest {
                     assertEquals(trade.getAsset().getPrice(), price);
                 },
                 () -> {
-                    assertEquals(trade.getAsset().getBidAsk(), bidAsk);
+                    assertEquals(trade.getAsset().getBidask(), bidAsk);
                 });
-        assertThrows(UnsupportedOperationException.class, () -> {
-            trade.getAsset().getSecurityGroup();
-        });
+
     }
 
     @Test
     void test_AvroCoder() throws IOException {
-        AbstractTradeFactory tradeFactory = new BondTradeFactory();
+        AbstractTradeFactory<BondTrade> tradeFactory = new BondTradeFactoryImpl();
         String securityId = "ISIN0123";
         double notional = 1000000;
         double price = 100;
         String currency = "USD";
+        String cust = "ABCD";
         BidAsk bidAsk = BidAsk.BID;
-        BondTrade trade = (BondTrade)tradeFactory.createTrade(securityId, notional, price, currency, bidAsk);
+        String TradeDate = "2018-01-04";
+        BondTrade trade = tradeFactory.createTrade(securityId,cust,TradeDate, notional, price, currency, bidAsk);
+
         AvroCoder<BondTrade> coder = AvroCoder.of(BondTrade.class);
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-
         coder.encode(trade, outStream);
         assertThat(outStream.size()).isGreaterThan(0);
-
         byte[] byteArray = outStream.toByteArray();
         ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray);
         BondTrade trade2=coder.decode(inputStream);
         assertAll(
                 ()->{
-                    assertEquals(trade.id, trade2.id);
+                    assertEquals(trade.getId(), trade2.getId());
                 },
                 ()->{
                     assertNotNull(trade2.getAsset());
                 },
                 ()->{
-                    assertEquals(trade.tradeType, trade2.tradeType);
+                    assertEquals(trade.getTradeType(), trade2.getTradeType());
                 }
                 ,
                 ()->{
@@ -77,7 +78,7 @@ class BondTradeFactoryTest {
                 }
                 ,
                 ()->{
-                    assertEquals(trade.timestamp, trade2.timestamp);
+                    assertEquals(trade.getTimestamp(), trade2.getTimestamp());
                 }
         );
     }

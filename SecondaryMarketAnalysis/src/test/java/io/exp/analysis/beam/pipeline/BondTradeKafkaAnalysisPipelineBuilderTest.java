@@ -4,8 +4,8 @@ import io.exp.analysis.beam.datasink.DataSinkBuilder;
 import io.exp.analysis.beam.datasink.RedisDataSinkBuilder;
 import io.exp.analysis.beam.pipeline.check.CheckBidAskAvg;
 import io.exp.analysis.beam.pipeline.check.CheckBidAskTrade;
-import io.exp.security.model.BidAsk;
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BidAsk;
+import io.exp.security.model.avro.BondTrade;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.PipelineResult;
 import org.apache.beam.sdk.transforms.ParDo;
@@ -14,8 +14,6 @@ import org.apache.beam.sdk.values.PCollection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("kafka")
 class BondTradeKafkaAnalysisPipelineBuilderTest {

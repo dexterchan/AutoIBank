@@ -1,7 +1,5 @@
 package io.exp.gateway;
 
-import io.exp.security.model.Trade;
-
 import java.io.Serializable;
 import java.util.function.Consumer;
 

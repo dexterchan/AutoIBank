@@ -7,7 +7,7 @@ import io.exp.gateway.AbstractMarketGatewayFactory;
 import io.exp.gateway.MarketGatewayInterface;
 import io.exp.gateway.fake.FakeBondMarketGatewayFactory;
 
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BondTrade;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.beam.sdk.Pipeline;

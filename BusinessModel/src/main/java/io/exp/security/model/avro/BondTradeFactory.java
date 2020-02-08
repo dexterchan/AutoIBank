@@ -1,8 +1,7 @@
-package io.exp.security.model;
+package io.exp.security.model.avro;
 
 import org.joda.time.Instant;
 
-import java.util.Date;
 import java.util.UUID;
 
 public class BondTradeFactory implements AbstractTradeFactory {

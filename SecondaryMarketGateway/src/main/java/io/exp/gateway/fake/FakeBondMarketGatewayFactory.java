@@ -2,7 +2,7 @@ package io.exp.gateway.fake;
 
 import io.exp.gateway.AbstractMarketGatewayFactory;
 import io.exp.gateway.MarketGatewayInterface;
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BondTrade;
 
 public class FakeBondMarketGatewayFactory implements AbstractMarketGatewayFactory<BondTrade> {
     @Override

@@ -1,11 +1,8 @@
 package io.exp.analysis.beam.pipeline;
 
 import com.google.gson.Gson;
-import io.exp.analysis.beam.pipeline.BondTradeAnalysisPipelineBuilderInterface;
-import io.exp.analysis.beam.pipeline.BondTradeFileAnalysisPipelineBuilder;
-import io.exp.analysis.beam.pipeline.BondTradeRealtimeAnalysisPipelineBuilder;
-import io.exp.security.model.BidAsk;
-import io.exp.security.model.BondTrade;
+import io.exp.security.model.avro.BidAsk;
+import io.exp.security.model.avro.BondTrade;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.beam.sdk.Pipeline;
