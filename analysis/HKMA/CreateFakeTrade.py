@@ -6,7 +6,7 @@ import random
 from util.AvroIO import AvroFileWriter, Writer
 
 def __getHKMAisin(securityInfoJsonFile):
-    with open('SelectedSecurity.json') as json_file:
+    with open(securityInfoJsonFile) as json_file:
         hkmaisin = json.load(json_file)
 
         def transformYear(b):
@@ -23,14 +23,16 @@ def __getHKMAisin(securityInfoJsonFile):
 def __generatePrimaryTrades(TenorVsBond, numOfInvestors, numOfTradesEach, writer:Writer):
     randomWords = RandomWords()
 
+    words = randomWords.get_random_words()
+
     for n in range(numOfInvestors):
-        investorName = randomWords.get_random_word()
+        investorName = words[n%len(words)]
         tenorWeight = {15: random.random(), 10: random.random(), 5: random.random()}
         primaryInvestorBot = PrimaryInvestorRobot(investorName,TenorVsBond, tenorWeight, 10000000,10000000)
 
         for t in range(numOfTradesEach):
             trade = primaryInvestorBot.generateTrade()
-            print(trade)
+            #print(trade)
             writer.write(trade)
 
 def generateHKMATrades (numOfInvestors:int, numOfTradesEach:int, securityJsonFile:str, avroFileOutput):
@@ -47,7 +49,7 @@ def generateHKMATrades (numOfInvestors:int, numOfTradesEach:int, securityJsonFil
     writer.close()
 
 if __name__ == "__main__":
-    avroFile = "bondtrade.avro"
-    numOfInvestors = 1
-    numOfTradesEach = 2
-    generateHKMATrades(numOfInvestors, numOfTradesEach,"SelectedSecurity.json", avroFile)
+    avroFile = "./sample/bondtrade.avro"
+    numOfInvestors = 10
+    numOfTradesEach = 1000
+    generateHKMATrades(numOfInvestors, numOfTradesEach, "./HKMA/SelectedSecurity.json", avroFile)

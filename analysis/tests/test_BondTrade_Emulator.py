@@ -1,6 +1,5 @@
 import unittest
-from util.InvestorRobot import PrimaryInvestorRobot
-from CreateFakeTrade import generateHKMATrades
+from HKMA.CreateFakeTrade import generateHKMATrades
 
 from avro.datafile import  DataFileReader
 from avro.io import DatumReader
@@ -10,8 +9,8 @@ class BondTradeTestSuite(unittest.TestCase):
     def test_HKMA_Bondtrades(self):
         avroFile = "testbondtrade.avro"
         numOfInvestors = 10
-        numOfTradesEach = 1000
-        generateHKMATrades(numOfInvestors, numOfTradesEach, "SelectedSecurity.json", avroFile)
+        numOfTradesEach = 100
+        generateHKMATrades(numOfInvestors, numOfTradesEach, "HKMA/SelectedSecurity.json", avroFile)
 
         reader = DataFileReader(open(avroFile, "rb"), DatumReader())
         cnt = 0

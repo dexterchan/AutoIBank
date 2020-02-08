@@ -8,9 +8,8 @@
       "type": "string"
     },
     {
-      "name": "timestamp",
-      "type": "long",
-      "logicalType": "time-millis"
+      "name": "cust",
+      "type": "string"
     },
     {
           "name": "tradeDate",
@@ -19,6 +18,11 @@
     {
       "name": "tradeType",
       "type": "string"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "time-millis"
     },
     {
       "name": "asset",
@@ -57,5 +61,6 @@
         ]
       }
     }
+
   ]
 }

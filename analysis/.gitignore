@@ -3,3 +3,4 @@
 *.avro
 *.pyc
 testbondtrade.avro
+dist
