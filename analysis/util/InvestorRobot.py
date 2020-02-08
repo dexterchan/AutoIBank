@@ -27,6 +27,7 @@ class PrimaryInvestorRobot:
         trade["id"] = tradeid
         trade["tradeType"] = "BOND"
         trade["timestamp"] = int(time.time() * 1000)
+        trade["cust"] = self.name
         security = random.choice(list(self.TenorVsBond[tenor]))
 
         mDate = self.YMDMatcher.match(security['expected_maturity_date'])

@@ -2,3 +2,4 @@
 .idea
 *.avro
 *.pyc
+testbondtrade.avro

@@ -8,6 +8,10 @@
       "type": "string"
     },
     {
+      "name": "cust",
+      "type": "string"
+    },
+    {
           "name": "tradeDate",
           "type": "string"
     },
