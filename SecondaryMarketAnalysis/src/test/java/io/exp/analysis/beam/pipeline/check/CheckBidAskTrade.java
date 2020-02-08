@@ -15,6 +15,6 @@ public class CheckBidAskTrade extends DoFn<BondTrade, Void> {
     @ProcessElement
     public void processElement(@Element BondTrade bondTrade, OutputReceiver<Void> out) throws Exception {
         log.debug(bondTrade.toString());
-        assertThat(bondTrade.getAsset().getBidAsk()).isEqualTo(this.bidask);
+        assertThat(bondTrade.getAsset().getBidask()).isEqualTo(this.bidask);
     }
 }

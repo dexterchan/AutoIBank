@@ -34,7 +34,7 @@ public interface BondTradeAnalysisPipelineBuilderInterface extends PipelineBuild
             new SerializableFunction<BondTrade, Boolean>() {
                 @Override
                 public Boolean apply(BondTrade bondTrade) {
-                    return bondTrade.getAsset().getBidAsk()==bidAsk;
+                    return bondTrade.getAsset().getBidask()==bidAsk;
                 }
             };
     static AnalysisProbes prepareAnalysisTransform(PCollection<BondTrade>pAllTrades){

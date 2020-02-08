@@ -27,7 +27,7 @@ repositories {
 mainClassName = 'io.exp.analysis.Main'
 
 dependencies {
-    compile project(':BusinessModel')
+    compile project(':AvroBusinessModel')
     compile project(':SecondaryMarketGateway')
     compile "org.slf4j:slf4j-api:$slf4jVersion"
     compile "org.slf4j:slf4j-log4j12:$slf4jVersion"

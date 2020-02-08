@@ -1,9 +1,11 @@
 package io.exp.analysis.beam.pipeline;
 
 import com.google.gson.Gson;
+
+import io.exp.analysis.beam.pipeline.check.CheckBidAskAvg;
 import io.exp.security.model.avro.BidAsk;
 import io.exp.security.model.avro.BondTrade;
-import lombok.Getter;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.PipelineResult;
@@ -11,23 +13,19 @@ import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
-import org.assertj.core.data.Offset;
-import org.assertj.core.util.Sets;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.annotation.Nonnull;
+
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
+
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @Slf4j
 class BondTradeFileAnalysisPipelineBuilderTest {
@@ -40,10 +38,10 @@ class BondTradeFileAnalysisPipelineBuilderTest {
     @BeforeAll
     public static void initAll() throws Exception{
         Gson gson = new Gson();
-        Reader bidReader = new FileReader(referenceBidRefJson);
-        Reader askReader = new FileReader(referenceAskRefJson);
-        bidReference = gson.fromJson(bidReader, Map.class);
-        askReference = gson.fromJson(askReader, Map.class);
+        //Reader bidReader = new FileReader(referenceBidRefJson);
+        //Reader askReader = new FileReader(referenceAskRefJson);
+        //bidReference = gson.fromJson(bidReader, Map.class);
+        //askReference = gson.fromJson(askReader, Map.class);
     }
     @BeforeEach
     public void init(){
@@ -65,15 +63,15 @@ class BondTradeFileAnalysisPipelineBuilderTest {
 
         PCollection<KV<String, Double>> pBidAvgPrice = analysisProbes.pBidAvgPrice;
         PCollection<KV<String, Double>> pAskAvgPrice = analysisProbes.pAskAvgPrice;
-        CheckBidAskAvg checkBidAvg = new CheckBidAskAvg(bidReference);
-        CheckBidAskAvg checkAskAvg = new CheckBidAskAvg(askReference);
+        CheckBidAskAvg checkBidAvg = new CheckBidAskAvg(BidAsk.BID);
+        CheckBidAskAvg checkAskAvg = new CheckBidAskAvg(BidAsk.ASK);
         pBidAvgPrice.apply("Check Bid Avg Price", ParDo.of(checkBidAvg));
         pAskAvgPrice.apply("Check Ask Avg Price", ParDo.of(checkAskAvg));
 
         PipelineResult pipelineResult = pipeline.run();
         pipelineResult.waitUntilFinish();
     }
-
+/*
     static class CheckBidAskAvg extends DoFn<KV<String, Double>, Void > {
         private final Map<String, Double> referenceData;
         @Getter
@@ -102,12 +100,9 @@ class BondTradeFileAnalysisPipelineBuilderTest {
             );
 
         }
-        /*
-        @Teardown
-        public void teardown(){
-            assertEquals(securitySet.size(), referenceData.size());
-        }*/
-    }
+
+    }*/
+
 
     static class CheckBidAskTrade extends DoFn<BondTrade, Void> {
         BidAsk bidask=null;
@@ -116,8 +111,8 @@ class BondTradeFileAnalysisPipelineBuilderTest {
         }
         @ProcessElement
         public void processElement(@Element BondTrade bondTrade, OutputReceiver<Void> out) throws Exception {
-            log.debug(bondTrade.toString());
-            assertThat(bondTrade.getAsset().getBidAsk()).isEqualTo(this.bidask);
+            //log.debug(bondTrade.toString());
+            assertThat(bondTrade.getAsset().getBidask()).isEqualTo(this.bidask);
         }
     }
 }
