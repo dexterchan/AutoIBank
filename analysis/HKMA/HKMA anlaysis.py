@@ -70,15 +70,26 @@ def getHKMA_data(url, inputparm={}, pageSize=5, offset=0, limit=0):
 # In[4]:
 
 
-def getHKMASync(url: str, dataSink: DataSink, inputparm={}, pageSize=5, offset=0, limit=0):
+def getHKMASync(url: str, dataSink: DataSink, inputparm={}, pageSize=100, offset=0, limit=0, convertor=None):
     print("Start", end="")
     for json in queryHKMA_API(url, inputparm, pageSize, offset, limit):
+        if convertor != None:
+            json = convertor(json)
         dataSink.insertJsonData(json)
         print("=", end="")
     print("finish")
 
 
 # In[5]:
+import re
+def convertTenor(secLst):
+    pattern = re.compile(r"(\d+)-year")
+    for sec in secLst:
+        if "original_maturity" in sec:
+            m = pattern.match(sec["original_maturity"])
+            if m is not None:
+                sec["original_maturity"] = f"{m.group(1)}Y"
+    return secLst
 
 
 mongoDBDataSink_OutstandingGovBond = MongoDBDataSink("mongodb://mongoadmin:secret@localhost:27017", "hkma",
@@ -87,83 +98,5 @@ mongoDBDataSink_OutstandingGovBond = MongoDBDataSink("mongodb://mongoadmin:secre
 # In[6]:
 
 
-getHKMASync(urls["outstandingGovBond"], mongoDBDataSink_OutstandingGovBond)
-
-# In[ ]:
-
-
-mongoDBDataSink_OutstandingAmtGovBond = MongoDBDataSink("mongodb://mongoadmin:secret@localhost:27017", "hkma",
-                                                        "OutstandingAmtGovBond")
-
-# In[ ]:
-
-
-getHKMASync(urls["outstandingAmtGovBond"], mongoDBDataSink_OutstandingAmtGovBond)
-
-# In[ ]:
-
-
-outstandingBond = getHKMA_data(urls["outstandingGovBond"])
-outstandingBond = outstandingBond.sort_values(by=['expected_maturity_date'], axis=0, ascending=False)
-dailyGovBondPrice = getHKMA_data(urls["DailyGovBondPrice"], {"segment": "Benchmark"}, 100, 0, 300)
-TenderResult3Y = getHKMA_data(urls["TenderResult"], {"segment": "3year"}, 100, 0, 300)
-NewIssuanceGovBond = getHKMA_data(urls["NewIssuanceGovBond"], {}, 100, 0, 300)
-outstandingAmtGovBond = getHKMA_data(urls["outstandingAmtGovBond"])
-
-# In[ ]:
-
-
-len(dailyGovBondPrice)
-
-# In[ ]:
-
-
-outstandingAmtGovBond_OrgMat = getHKMA_data(urls["outstandingAmtGovBond_OrgMat"], {}, 100, 0, 100)
-
-# In[ ]:
-
-
-pandasDataSink = PandasDataSink()
-getHKMASync(urls["outstandingAmtGovBond_OrgMat"], pandasDataSink, {}, 100, 0, 100)
-outstandingAmtGovBond_OrgMat2 = pandasDataSink.outDF
-
-# In[ ]:
-
-
-len(outstandingAmtGovBond_OrgMat) == len(outstandingAmtGovBond_OrgMat2)
-
-# In[ ]:
-
-
-dailyGovBondPrice.head()
-
-# In[ ]:
-
-
-outstandingBond.head()
-
-# In[ ]:
-
-
-TenderResult3Y.head()
-
-# In[ ]:
-
-
-NewIssuanceGovBond
-
-# In[ ]:
-
-
-outstandingAmtGovBond
-
-# In[ ]:
-
-
-outstandingAmtGovBond_OrgMat
-
-# In[ ]:
-
-
-
+getHKMASync(urls["outstandingGovBond"], mongoDBDataSink_OutstandingGovBond,{},100,0,0,convertTenor)
 
