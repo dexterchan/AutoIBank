@@ -34,6 +34,7 @@ dependencies {
     compile  "org.apache.beam:beam-sdks-java-core:$beamVersion"
     compile  "org.apache.beam:beam-sdks-java-io-google-cloud-platform:$beamVersion"
     compile group: 'org.apache.beam', name: 'beam-sdks-java-io-mongodb', version: "$beamVersion"
+    compile group: 'org.apache.beam', name: 'beam-sdks-java-extensions-join-library', version: "$beamVersion"
 
 
     compile group: 'com.google.guava', name: 'guava', version: "$guavaVersion"

@@ -21,6 +21,8 @@ calculate from investor past trading activities (only Ask trade)
 ###Prior probability:
 Data needed
 Investor past trading activities
+parameterized investor behavior as Gaussian Distribution
+For tenor, find the mean, variance of notional of trades
 
 
 ##Run the application

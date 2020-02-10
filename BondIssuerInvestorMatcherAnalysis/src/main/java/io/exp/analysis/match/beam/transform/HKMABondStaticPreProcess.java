@@ -18,7 +18,7 @@ public class HKMABondStaticPreProcess extends PTransform<PCollection<Document>,P
     public PCollection<BondStatic> expand(PCollection<Document> input) {
 
         PCollection<BondStatic> bondStatic = input.apply(
-                ParDo.of(
+                "Transform MongoDoc to Bond Static",ParDo.of(
                         new DoFn<Document, BondStatic>() {
                             @ProcessElement
                             public void processElement(@Element Document c, OutputReceiver< BondStatic > out) {
