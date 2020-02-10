@@ -1,0 +1,50 @@
+{
+  "name": "BondStatic",
+  "type": "record",
+  "namespace": "io.exp.security.model.avro",
+  "fields": [
+    {
+      "name": "expected_maturity_date",
+      "type": "string"
+    },
+    {
+      "name": "original_maturity",
+      "type": "string"
+    },
+    {
+      "name": "issue_number",
+      "type": "string"
+    },
+    {
+      "name": "isin_code",
+      "type": "string"
+    },
+    {
+      "name": "stock_code",
+      "type": "string"
+    },
+    {
+      "name": "coupon",
+      "type": "double"
+    },
+    {
+      "name": "outstanding_size",
+      "type": "double"
+    },
+    {
+      "name": "institutional_retail",
+      "type": "string"
+    },
+    {
+      "name": "fixfloat",
+      "type": {
+        "name": "FixFloat",
+        "type": "enum",
+        "symbols": [
+          "FIX",
+          "FLOAT"
+        ]
+      }
+    }
+  ]
+}
