@@ -4,9 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.exp.analysis.match.beam.model.BondTradeActivityData;
 import io.exp.analysis.match.beam.model.Gaussian;
-import io.exp.security.model.avro.BondStatic;
-import io.exp.security.model.avro.BondTrade;
-import lombok.Builder;
 import org.apache.beam.sdk.transforms.*;
 import org.apache.beam.sdk.transforms.join.CoGbkResult;
 import org.apache.beam.sdk.transforms.join.CoGroupByKey;
@@ -14,7 +11,6 @@ import org.apache.beam.sdk.transforms.join.KeyedPCollectionTuple;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.TupleTag;
-import org.joda.time.Duration;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,6 +18,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+//Reference Gaussian distribution
+//https://en.wikipedia.org/wiki/Normal_distribution
 public class GaussianTrainPerInvestor extends PTransform<PCollection<KV<String, BondTradeActivityData>>, PCollection< KV<String, Gaussian>  > > {
     @Override
     public PCollection<KV<String, Gaussian >> expand(PCollection<KV<String, BondTradeActivityData>> input) {
@@ -89,21 +87,6 @@ public class GaussianTrainPerInvestor extends PTransform<PCollection<KV<String, 
                     }
             )
         );
-
-        //Gather Result
-        /*
-        PCollection<KV<String, Gaussian >> result = custTradeNtlMean.apply(
-            ParDo.of(
-                    new DoFn<KV<String, Double>, KV<String, Gaussian>>() {
-                        @ProcessElement
-                        public void processElement(@Element KV<String, Double> e, OutputReceiver< KV<String, Gaussian >> out){
-                            out.output(
-                                    KV.of(e.getKey(), Gaussian.builder().mean(e.getValue()).var(0).build())
-                            );
-                        }
-                    }
-            )
-        );*/
         return meanVarResult;
     }
     static final DoFn<Iterable<KV<String, Double>>, KV<String, Double>> iteratableKV2KV =
