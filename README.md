@@ -14,13 +14,13 @@ P(secondary market) is the same for all investor allocation. we want to compare 
 key problem... complicated...
 
 3. Prior probability: P(investor allocation|tenor) <br>
-calculate from investor past trading activities (only Ask trade)
+calculate from investor historical trading activities (only Ask trade)
 
 >Reference: https://towardsdatascience.com/probability-concepts-explained-bayesian-inference-for-parameter-estimation-90e8930e5348
 
 ###Prior probability:
 Data needed
-Investor past trading activities
+Investor historical trading activities
 parameterized investor behavior as Gaussian Distribution
 For tenor, find the mean, variance of notional of trades
 
