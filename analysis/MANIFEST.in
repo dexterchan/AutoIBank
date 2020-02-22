@@ -1,0 +1,2 @@
+include *.avsc
+recursive-include examples *.avsc *.py *.json

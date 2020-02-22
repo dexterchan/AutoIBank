@@ -48,8 +48,17 @@ def generateHKMATrades (numOfInvestors:int, numOfTradesEach:int, securityJsonFil
     __generatePrimaryTrades(TenorVsBond, numOfInvestors, numOfTradesEach, writer)
     writer.close()
 
+
+import argparse
+
 if __name__ == "__main__":
-    avroFile = "./sample/bondtrade.avro"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-o", "--output", help="output bond trade as avro file")
+    parser.add_argument("-V", "--version", help="show program version", action="store_true")
+
+    args = parser.parse_args()
+
+    avroFile = args.output #"./sample/bondtrade.avro"
     numOfInvestors = 10
-    numOfTradesEach = 1000
+    numOfTradesEach = 100000
     generateHKMATrades(numOfInvestors, numOfTradesEach, "./HKMA/SelectedSecurity.json", avroFile)
