@@ -20,3 +20,7 @@ Test Package
 ````
 pytest tests
 ````
+
+Run Pacakge
+export PYTHONPATH=.
+python HKMA/CreateFakeTrade.py -o bondtrade2.avro
