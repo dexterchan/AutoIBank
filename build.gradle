@@ -9,9 +9,10 @@ sourceCompatibility = 1.8
 repositories {
     mavenCentral()
 }
-
+//NOte Beam 2.17-2.18 failed with Avro + Beam
+// only 2.16, 2.19 working
 ext{
-    beamVersion = '2.16.0'
+    beamVersion = '2.19.0'
     slf4jVersion = '1.7.28'
     log4jVersion = '2.12.1'
     junitVersion = "5.3.1"
@@ -25,5 +26,5 @@ ext{
     guavaVersion = '28.1-jre'
     cliVersion = '1.4'
     kafkaVersion = '2.4.0'
-    avroVersion = "1.9.0"
+    avroVersion = "1.9.2"
 }
