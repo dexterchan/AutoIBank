@@ -1,6 +1,6 @@
 # AutoIBank
 
-##Our business problem
+## Our business problem
 An automation to match investors and Bond issuers in an automated platform. <br>
 In short, the automation models the Bond Issuance operation with Sales, Traders of a typical Investment Bank <br>
 It speeds up the deal between Banking and Market with minimum human intervention. <br>
