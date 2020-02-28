@@ -1,15 +1,15 @@
 # AutoIBank
 
 ## Our business problem
-An automation platform matches investors and Bond issuers. <br>
-The system models the Bond Issuance operation with Sales, Traders of a typical Investment Bank <br>
-It speeds up the deal between Banking and Market with minimum human intervention. <br>
-Also, it enforces the segregation duty and best execution to both investors and issuers. <br>
-It ensures: <br>
-1. system act neutrally on the benefit between Banking and Market in Primary market <br>
-2. referencing secondary market activities, source right price for issuers reference <br>
-3. project the potential bond sales figure for different Bond issue price reflected from historical secondary market behavior<br>
-4. find potential investors in the Market behind of the Chinese wall of Banking <br>
+An automation platform matches investors and Bond issuers at a particular fund raising size and price. <br>
+The system models the Bond Issuance activities with Sales, Traders of a typical Investment Bank <br>
+By analyzing huge trade data and market data, it shortens the fund raising analysis time with Banking and Market sides <br>
+Also, with minimum human intervention, it enforces the segregation of duty and best execution offer to both investors and issuers. <br>
+It features: <br>
+1. system acting neutrally on the benefit between Banking and Market in Primary market <br>
+2. referencing secondary market activities, finding the right price for issuers reference <br>
+3. projecting the potential bond sales figure for different Bond issue price reflected from historical secondary market behavior<br>
+4. finding potential investors in the Market behind of the Chinese wall of Banking <br>
  
 ### Workflow diagram
 to be added
