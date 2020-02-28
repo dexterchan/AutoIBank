@@ -14,7 +14,7 @@ It ensures: <br>
 ### Workflow diagram
 to be added
 
-##How to model the workflow?
+## How to model the workflow?
 Any system implementation is a solution to mathematic workflow. <br>
 This matching workflow can be modelled with Bayne Inference as follow <br>
 
@@ -34,7 +34,7 @@ calculate from investor historical trading activities (only Ask trade)
 
 >Reference: https://towardsdatascience.com/probability-concepts-explained-bayesian-inference-for-parameter-estimation-90e8930e5348
 
-###Prior probability implementation:
+### Prior probability implementation:
 Data needed <br>
 Investor historical trading activities <br>
 parameterized investor behavior as Gaussian Distribution <br>
@@ -42,7 +42,7 @@ For tenor, find the mean, variance of notional of trades <br>
 
 
 ## System run
-###How to run the secondary market analysis component?
+### How to run the secondary market analysis component?
 Implementation is with Kafka and Apache Dataflow. <br>
 Now, we run a dummy trade generator of 10 investors for testing purpose
 
@@ -53,7 +53,7 @@ gradle -Pdirect clean build
 ```
 
 
-####Kafka dependency
+#### Kafka dependency
 ##### Modules:
 SecondaryMarketGateway - Publisher
 SecondaryMarketAnalysis - Subscriber
