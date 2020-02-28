@@ -23,7 +23,8 @@ This matching workflow can be modelled with Bayne Inference as follow <br>
 find the max Probably(investor allocation | Secondary market, $ issuer issuance, tenor) with certain investor allocation <br>
 = P($ issuer issuance | investor allocation, tenor) * P(investor allocation|tenor) / P(Secondary market)
 1. P(Secondary market) ... to be ignored.... <br>
-P(secondary market) is the same for all investor allocation. we want to compare different investor allocation resulting max probability
+P(secondary market) is the same for all investor allocation. <br>
+As we want to compare different investor allocation to find max probability, we can ignore it.
 
 2. Likelihood : P($ issuer issuance | investor allocation, tenor) <br>
 >Posterier distribution: https://en.wikipedia.org/wiki/Posterior_distribution <br>
