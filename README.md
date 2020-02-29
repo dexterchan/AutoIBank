@@ -1,7 +1,7 @@
 # AutoIBank
 
 ## Our business problem
-An automation platform matches investors and Bond issuers at a particular fund raising size and price. <br>
+An automated platform matches investors and Bond issuers at a particular fund raising size and price. <br>
 The system models the Bond Issuance activities with Sales, Traders of a typical Investment Bank <br>
 By analyzing huge trade data and market data, it shortens the fund raising analysis time with Banking and Market sides <br>
 Also, with minimum human intervention, it enforces the segregation of duty and best execution offer to both investors and issuers. <br>
@@ -20,17 +20,17 @@ This matching workflow can be modelled with Bayne Inference as follow <br>
 
 
 *Applying Bayne Inference, with historical data, we would have <br>
-find the max Probably(investor allocation | Secondary market, $ issuer issuance, tenor) with certain investor allocation <br>
-= P($ issuer issuance | investor allocation, tenor) * P(investor allocation|tenor) / P(Secondary market)
-1. P(Secondary market) ... to be ignored.... <br>
-P(secondary market) is the same for all investor allocation. <br>
+find the max Probably(investor allocation | $ issuer issuance, tenor, Secondary market) with certain investor allocation <br>
+= P($ issuer issuance | investor allocation, tenor, Secondary market) * P(investor allocation|tenor,Secondary market) / P($ issuer issuance| Secondary market, tenor)
+1. P($ issuer issuance| Secondary market, tenor) ... to be ignored.... <br>
+P($ issuer issuance| Secondary market, tenor)  is the same for all investor allocation. <br>
 As we want to compare different investor allocation to find max probability, we can ignore it.
 
-2. Likelihood : P($ issuer issuance | investor allocation, tenor) <br>
+2. Likelihood : P($ issuer issuance | investor allocation, tenor, Secondary market) <br>
 >Posterier distribution: https://en.wikipedia.org/wiki/Posterior_distribution <br>
 to be addressed <br>
 
-3. Prior probability: P(investor allocation|tenor) <br>
+3. Prior probability: P(investor allocation|tenor,Secondary market) <br>
 calculate from investor historical trading activities (only Ask trade)
 
 >Reference: https://towardsdatascience.com/probability-concepts-explained-bayesian-inference-for-parameter-estimation-90e8930e5348

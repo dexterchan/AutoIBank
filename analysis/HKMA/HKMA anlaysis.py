@@ -3,12 +3,14 @@
 
 # In[1]:
 
-
+import logging
 import requests
 import pandas as pd
 import abc
 from util.DataSinkSet import DataSink, PandasDataSink, MongoDBDataSink
 
+FORMAT = '%(asctime)-15s %(levelname)s %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 # In[2]:
 
 
