@@ -7,6 +7,7 @@ BondTradeAnalysis.egg-info/dependency_links.txt
 BondTradeAnalysis.egg-info/top_level.txt
 HKMA/CreateFakeTrade.py
 HKMA/HKMA anlaysis.py
+HKMA/SelectedSecurity.json
 HKMA/__init__.py
 util/Adapter.py
 util/AvroIO.py

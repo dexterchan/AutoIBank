@@ -54,11 +54,15 @@ import argparse
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-o", "--output", help="output bond trade as avro file")
+    parser.add_argument("-n", "--numInvestorTrades", help="number of trade per investor")
+    parser.add_argument("-i", "--numInvestor", help="number of investors")
     parser.add_argument("-V", "--version", help="show program version", action="store_true")
 
     args = parser.parse_args()
 
     avroFile = args.output #"./sample/bondtrade.avro"
-    numOfInvestors = 10
-    numOfTradesEach = 100000
+
+    numOfInvestors = 10 if args.numInvestor is None else int(args.numInvestor)
+    numOfTradesEach = 1000 if args.numInvestorTrades is None else int(args.numInvestorTrades)
+    print("%d investors, each investor %d trades"%(numOfInvestors, numOfTradesEach))
     generateHKMATrades(numOfInvestors, numOfTradesEach, "./HKMA/SelectedSecurity.json", avroFile)

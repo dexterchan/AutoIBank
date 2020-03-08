@@ -1,2 +1,4 @@
 include *.avsc
-recursive-include examples *.avsc *.py *.json
+include *.json
+
+recursive-include HKMA *.avsc *.py *.json
