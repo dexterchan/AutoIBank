@@ -33,7 +33,6 @@ public class HKMACapitalMatchPipelineBuilder implements PipelineBuilder {
                 .as(HKMAAnalysisOptions.class);
 
         pipeline = Pipeline.create(hkmaAnalysisOptions);
-
         this.prepareBondTradeCollection();
         this.prepareSecurityCollection();
 

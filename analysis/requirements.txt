@@ -3,3 +3,4 @@ avro-python3
 setuptools
 pytest
 random-word
+mysql-connector
