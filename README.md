@@ -69,11 +69,13 @@ As we want to compare different investor allocation to find max probability, we 
 Finally, within N investor, we search the largest probability giving largest: <br>
 ![MaxEquation](resource/FinalEquation.png)<br>
 We look for investor allocation vector i(1), i(2)... i(N) to maximize above function<br>
-where ratio(n) = i(n) / (total bond position of tenor T of investor n) <br>
+where 
+- Constraint: i(1)+i(2)+...+i(N) = target investor issuance amount <br>
+- ratio(n) = i(n) / (total bond position of tenor T of investor n) <br>
 
 It is a simple Gaussian cost function <br>
 Next, we find the optimizer for this Gaussian cost function. <br>
-A simple Gradient decent would be a potential candidate. <br>
+With single constraint, Lagrange multiplier would be a potential candidate. <br>
 
 
 #### Highlight
