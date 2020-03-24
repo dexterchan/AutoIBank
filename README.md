@@ -35,6 +35,9 @@ A probability distribution of below is answer <br>
 P(investor allocation | $Issuer issurance) <br>
 We would search the investor allocation list from max probability value of above distribution <br>
 
+The distribution is not trivial to understand. <br>
+Bayne equation helps us to break down the problem into smaller problem to solve. <br>
+
 The distribution can be expressed in Bayne equation <br>
  ![Bayes in](resource/BaynesEqtAutoIbank.png)<br>
 
@@ -44,7 +47,8 @@ Prior probability is P(investor allocation) <br>
 
 #### Assumption: <br>
 Investors are taking Bond Ladder strategy to manage their portfolio. <br>
-Therefore, they buy/sell certain tenor periodically of certain SIMILAR issuer to manage credit/interest risk exposure.
+Therefore, they buy/sell certain tenor periodically of certain SIMILAR issuer to manage credit/interest risk exposure. <br>
+With Bond Ladder assumption, we derive investor behavior easier from trading activities. <br>
 
 1. Prior probability: P(investor allocation) <br>
 It asks how likely investor spending X dollars on certain tenor T in secondary market
