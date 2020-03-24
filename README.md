@@ -25,7 +25,7 @@ Also, the system would predict the possible yield
 e.g. LIBOR + X basis points 
 for issuer reference.
 
-## How to model the workflow?
+### How to model the workflow?
 A mathematical model would simulate a system workflow <br>
 We start from simple using Bayne Inference. <br>
 
@@ -42,7 +42,7 @@ where <br>
 Likelihood is P($issuer issuance | investor allocation) <br>
 Prior probability is P(investor allocation) <br>
 
-####Assumption: <br>
+#### Assumption: <br>
 Investors are taking Bond Ladder strategy to manage their portfolio. <br>
 Therefore, they buy/sell certain tenor periodically of certain SIMILAR issuer to manage credit/interest risk exposure.
 
@@ -65,7 +65,7 @@ We find the distribution of y/x=ratio in last 360 days <br>
 P($ issuer issuance)  is the same for all investor allocation. <br>
 As we want to compare different investor allocation to find max probability, we may ignore it.
 
-####Search for max probability 
+#### Search for max probability 
 Finally, within N investor, we search the largest probability giving largest: <br>
 ![MaxEquation](resource/FinalEquation.png)<br>
 We look for investor allocation vector i(1), i(2)... i(N) to maximize above function<br>
@@ -76,7 +76,7 @@ Next, we find the optimizer for this Gaussian cost function. <br>
 A simple Gradient decent would be a potential candidate. <br>
 
 
-####Highlight
+#### Highlight
 Equation will punish large N. If larger N, the probability product becomes smaller. <br>
 Empirically, we would add a term  alpha * log (N) on cost function to give extra punishment. <br>
 ratio in Likelihood applies limit on allocating excessive position to investor if they don't hold bond position of similar issuer before. <br>
@@ -85,14 +85,14 @@ ratio in Likelihood applies limit on allocating excessive position to investor i
 >Reference: https://towardsdatascience.com/probability-concepts-explained-bayesian-inference-for-parameter-estimation-90e8930e5348 <br>
 >Posterier distribution: https://en.wikipedia.org/wiki/Posterior_distribution 
 to be addressed <br>
----
+
 ### Find the possible yield 
 For finding possible yield, we can apply standard interest rate model. <br>
-For example, applying short-rate model as below<br>
+For example, applying short-rate model which is well known by the industry<br>
 ![ShortRate](resource/ShortRate.png)<br>
 We would empirically take the simpliest form in the beginning.
 
-
+---
 ## System run
 ### How to run the secondary market analysis component?
 Implementation is with Kafka and Apache Dataflow. <br>
