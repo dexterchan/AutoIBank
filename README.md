@@ -12,34 +12,85 @@ It features: <br>
 4. finding potential investors in the Market behind of the Chinese wall of Banking <br>
  
 ### Workflow diagram
-to be added
+![Bond matching workflow](resource/bondMatchingWorkflow.png)
+
+Under recent secondary market condition, <br>
+a process would take input parameters:
+1) $ Issuer issuance (total bond issuance amount)
+2) tenor
+
+System would output 
+the list of potential investors with their interested auction amount in current secondary condition.
+Also, the system would predict the possible yield 
+e.g. LIBOR + X basis points 
+for issuer reference.
 
 ## How to model the workflow?
-Any system implementation is a solution to mathematic workflow. <br>
-This matching workflow can be modelled with Bayne Inference as follow <br>
+A mathematical model would simulate a system workflow <br>
+We start from simple using Bayne Inference. <br>
+
+Under current Secondary market of tenor T e.g. 5Y <br>
+
+A probability distribution of below is answer <br>
+P(investor allocation | $Issuer issurance) <br>
+We would search the investor allocation list from max probability value of above distribution <br>
+
+The distribution can be expressed in Bayne equation <br>
+ ![Bayes in](resource/BaynesEqtAutoIbank.png)<br>
+
+where <br>
+Likelihood is P($issuer issuance | investor allocation) <br>
+Prior probability is P(investor allocation) <br>
+
+####Assumption: <br>
+Investors are taking Bond Ladder strategy to manage their portfolio. <br>
+Therefore, they buy/sell certain tenor periodically of certain SIMILAR issuer to manage credit/interest risk exposure.
+
+1. Prior probability: P(investor allocation) <br>
+It asks how likely investor spending X dollars on certain tenor T in secondary market
+calculate from investor historical trading activities in secondary market on certain tenor in last 12 months. <br>
+We ignore (buy/sell) flag. <br>
+From the trade activities of a particular tenor, Gaussian distribution models the distribution of notional. <br>
+For each investor, we find the mean, standard derivation from the notional of bond trades <br>
+Note: we would normalize the mean, standard derivation <br>
+ ![investor gaussian](resource/investorGaussian.png)<br>
+
+2. Likelihood : P($ issuer issuance | investor allocation) <br>
+In a certain tenor T in secondary market, we find position ratio of holding issuer bond of each investor<br>
+For each investor, having $x position in tenor T, how much they hold portion y in bond position issued by target issuer. <br>
+We find the distribution of y/x=ratio in last 360 days <br>
+![PortionDistribution](resource/PortionDistribution.png) <br>
+
+3. P($ issuer issuance) ... to be ignored.... <br>
+P($ issuer issuance)  is the same for all investor allocation. <br>
+As we want to compare different investor allocation to find max probability, we may ignore it.
+
+####Search for max probability 
+Finally, within N investor, we search the largest probability giving largest: <br>
+![MaxEquation](resource/FinalEquation.png)<br>
+We look for investor allocation vector i(1), i(2)... i(N) to maximize above function<br>
+where ratio(n) = i(n) / (total bond position of tenor T of investor n) <br>
+
+It is a simple Gaussian cost function <br>
+Next, we find the optimizer for this Gaussian cost function. <br>
+A simple Gradient decent would be a potential candidate. <br>
 
 
-*Applying Bayne Inference, with historical data, we would have <br>
-find the max Probably(investor allocation | $ issuer issuance, tenor, Secondary market) with certain investor allocation <br>
-= P($ issuer issuance | investor allocation, tenor, Secondary market) * P(investor allocation|tenor,Secondary market) / P($ issuer issuance| Secondary market, tenor)
-1. P($ issuer issuance| Secondary market, tenor) ... to be ignored.... <br>
-P($ issuer issuance| Secondary market, tenor)  is the same for all investor allocation. <br>
-As we want to compare different investor allocation to find max probability, we can ignore it.
+####Highlight
+Equation will punish large N. If larger N, the probability product becomes smaller. <br>
+Empirically, we would add a term  alpha * log (N) on cost function to give extra punishment. <br>
+ratio in Likelihood applies limit on allocating excessive position to investor if they don't hold bond position of similar issuer before. <br>
 
-2. Likelihood : P($ issuer issuance | investor allocation, tenor, Secondary market) <br>
->Posterier distribution: https://en.wikipedia.org/wiki/Posterior_distribution <br>
+
+>Reference: https://towardsdatascience.com/probability-concepts-explained-bayesian-inference-for-parameter-estimation-90e8930e5348 <br>
+>Posterier distribution: https://en.wikipedia.org/wiki/Posterior_distribution 
 to be addressed <br>
-
-3. Prior probability: P(investor allocation|tenor,Secondary market) <br>
-calculate from investor historical trading activities (only Ask trade)
-
->Reference: https://towardsdatascience.com/probability-concepts-explained-bayesian-inference-for-parameter-estimation-90e8930e5348
-
-### Prior probability implementation:
-Data needed <br>
-Investor historical trading activities <br>
-parameterized investor behavior as Gaussian Distribution <br>
-For tenor, find the mean, variance of notional of trades <br>
+---
+### Find the possible yield 
+For finding possible yield, we can apply standard interest rate model. <br>
+For example, applying short-rate model as below<br>
+![ShortRate](resource/ShortRate.png)<br>
+We would empirically take the simpliest form in the beginning.
 
 
 ## System run

@@ -4,6 +4,7 @@ apply plugin: 'maven'
 
 buildscript {
     repositories {
+        mavenLocal()
         jcenter()
         mavenCentral()
     }
@@ -23,7 +24,9 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.11
 
 repositories {
+    mavenLocal()
     mavenCentral()
+
 }
 mainClassName = 'io.exp.gateway.Main'
 
@@ -46,6 +49,8 @@ dependencies {
     // https://mvnrepository.com/artifact/commons-cli/commons-cli
     compile group: 'commons-cli', name: 'commons-cli', version: "$cliVersion"
 
+    //compile group: 'com.bloomberglp', name: 'blpapi', version: "1.0-SNAPSHOT"
+    compile files('~/.m2/repository/com/bloomberglp/blpapi/1.0-SNAPSHOT/blpapi-1.0-SNAPSHOT.jar')
 
     testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testCompile "org.junit.jupiter:junit-jupiter-engine:$junitVersion"

@@ -6,9 +6,7 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
-}
+
 //NOte Beam 2.17-2.18 failed with Avro + Beam
 // only 2.16, 2.19 working
 ext{
