@@ -23,6 +23,9 @@ sourceCompatibility = 1.11
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
 }
 mainClassName = 'io.exp.analysis.Main'
 
@@ -38,6 +41,7 @@ dependencies {
     compile  "org.apache.beam:beam-sdks-java-io-kafka:$beamVersion"
     compile group: 'org.apache.beam', name: 'beam-sdks-java-io-redis', version: "$beamVersion"
 
+    compile group: 'org.treequery', name: 'TreeQueryNodeGrpc', version: "1.0-SNAPSHOT"
 
     compile group: 'com.google.guava', name: 'guava', version: "$guavaVersion"
 

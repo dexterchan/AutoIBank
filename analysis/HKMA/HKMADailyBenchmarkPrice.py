@@ -67,7 +67,7 @@ class DailyBondPrice():
 
     def __insertRecord(self, asofdate, tenor, price):
         sql = "INSERT INTO DailyGovBondPrice (AsOfDate, Tenor, Price) VALUES (%s, %s, %s)"
-        val = (asofdate, tenor, price)
+        val = (asofdate, tenor.upper(), price)
         mycursor = self.mydb.cursor()
         mycursor.execute(sql, val)
         self.mydb.commit()
